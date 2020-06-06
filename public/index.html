@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,viewport-fit=cover">
+
+		<title>Covid Occupancy Tracker</title>
+
+		<!-- Roboto and Open Sans fonts -->
+		<link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap" rel="stylesheet">
+
+		<!-- First input delay script -->
+		<script>!function(n,e){var t,o,i,c=[],f={passive:!0,capture:!0},r=new Date,a="pointerup",u="pointercancel";function p(n,c){t||(t=c,o=n,i=new Date,w(e),s())}function s(){o>=0&&o<i-r&&(c.forEach(function(n){n(o,t)}),c=[])}function l(t){if(t.cancelable){var o=(t.timeStamp>1e12?new Date:performance.now())-t.timeStamp;"pointerdown"==t.type?function(t,o){function i(){p(t,o),r()}function c(){r()}function r(){e(a,i,f),e(u,c,f)}n(a,i,f),n(u,c,f)}(o,t):p(o,t)}}function w(n){["click","mousedown","keydown","touchstart","pointerdown"].forEach(function(e){n(e,l,f)})}w(n),self.perfMetrics=self.perfMetrics||{},self.perfMetrics.onFirstInputDelay=function(n){c.push(n),s()}}(addEventListener,removeEventListener);</script>
+	</head>
+	<body>
+		<noscript style="display:block;position:fixed;left:0;top:0;right:0;bottom:0">
+			<div style="display:table;width:100%;height:100%">
+				<div style="display:table-cell;vertical-align:middle">
+					<strong style="display:block;width:100%;text-align:center;font-family:sans-serif">
+						This application requires JavaScript.
+					</strong>
+				</div>
+			</div>
+		</noscript>
+
+		<div id="app"></div>
+
+		<!-- Scripts injected here-->
+	</body>
+</html>

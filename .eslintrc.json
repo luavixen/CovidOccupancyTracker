@@ -1,0 +1,33 @@
+{
+	"env": {
+		"es6": true,
+		"node": true
+	},
+	"parser": "vue-eslint-parser",
+	"parserOptions": {
+		"parser": "@typescript-eslint/parser",
+		"ecmaVersion": 11,
+		"sourceType": "module"
+	},
+	"extends": [
+		"plugin:vue/vue3-essential",
+		"@vue/typescript"
+		/* "eslint:recommended",				*/
+		/* "plugin:@typescript-eslint/eslint-recommended",	*/
+		/* "plugin:@typescript-eslint/recommended"		*/
+	],
+	"plugins": ["@typescript-eslint", "vue"],
+	"rules": {
+		"@typescript-eslint/quotes": [2, "double"],
+		"@typescript-eslint/semi": [2, "always"],
+
+		"comma-dangle": [2, "never"],
+
+		"@typescript-eslint/indent": [1, "tab"],
+		"linebreak-style": [1, "unix"],
+
+		"@typescript-eslint/comma-spacing": [1, { "before": false, "after": true }],
+		"@typescript-eslint/brace-style": [1, "1tbs"],
+		"@typescript-eslint/func-call-spacing": [1, "never"]
+	}
+}

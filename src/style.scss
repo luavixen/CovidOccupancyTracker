@@ -1,0 +1,27 @@
+/* src/style.css
+	Global stylesheet, loaded from src/index.ts */
+
+/* Global styles for all elements */
+*, *::before, *::after {
+	/* Use border-box CSS box model
+		https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing */
+	box-sizing: border-box;
+	/* Disable built-in outlines */
+	outline: 0;
+	/* Set global font family to use */
+	font-family: 'Open Sans', Arial, Helvetica, sans-serif;	
+}
+
+/* Use Roboto as the font for headers */
+h1, h2, h3, h4, h5, h6 { font-family: 'Roboto', Arial, Helvetica, sans-serif; }
+
+/* Lock the COT app container to fill the whole page, no matter what */
+.cot-app {
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: 0; padding: 0; border: 0;
+	overflow: hidden;
+}

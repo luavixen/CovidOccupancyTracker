@@ -1,0 +1,45 @@
+{
+	"name": "covid-occupancy-tracker",
+	"version": "1.0.0-PRERELEASE",
+	"description": "Webapp for tracking the number of people in a building, designed for a specific grocery store chain.",
+	"author": "Lua~ <luawhat@gmail.com> (https://lua.wtf/)",
+	"license": "UNLICENSED",
+	"private": true,
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"serve": "vue-cli-service serve",
+		"build": "vue-cli-service build",
+		"lint": "vue-cli-service lint",
+		"deploy": "firebase deploy"
+	},
+	"devDependencies": {
+		"@types/node": "^14.0.9",
+		"@typescript-eslint/eslint-plugin": "^3.1.0",
+		"@typescript-eslint/parser": "^3.1.0",
+		"@vue/cli": "^4.4.1",
+		"@vue/cli-plugin-babel": "^4.4.1",
+		"@vue/cli-plugin-eslint": "^4.4.1",
+		"@vue/cli-plugin-router": "^4.4.1",
+		"@vue/cli-plugin-typescript": "^4.4.1",
+		"@vue/cli-plugin-vuex": "^4.4.1",
+		"@vue/cli-service": "^4.4.1",
+		"@vue/eslint-config-typescript": "^5.0.2",
+		"eslint": "^7.1.0",
+		"eslint-plugin-vue": "^7.0.0-alpha.5",
+		"firebase-tools": "^8.4.1",
+		"sass": "^1.26.7",
+		"sass-loader": "^8.0.2",
+		"typescript": "^3.9.3",
+		"vue-template-compiler": "^2.6.11"
+	},
+	"dependencies": {
+		"core-js": "^3.6.5",
+		"firebase": "^7.14.6",
+		"vue": "^2.6.11",
+		"vue-class-component": "^7.2.3",
+		"vue-property-decorator": "^8.4.2",
+		"vue-router": "^3.3.2",
+		"vuex": "^3.4.0",
+		"vuex-i18n": "^1.13.1"
+	}
+}
