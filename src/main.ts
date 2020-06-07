@@ -5,6 +5,9 @@
 import Vue from "vue";
 Vue.config.productionTip = false;
 
+/* Initialize Firebase */
+import "@/firebase";
+
 /* Load Vuex and the Vue Router */
 import router from "@/router";
 import store from "@/store";
