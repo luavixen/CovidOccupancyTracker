@@ -2,7 +2,9 @@
 	Dashboard view, displays the current counter and provides controls for manipulating it -->
 
 <template>
-	<div class="cot-dashboard" />
+	<div class="cot-dashboard">
+		{{ $t("hello") }}
+	</div>
 </template>
 
 <script lang="ts">

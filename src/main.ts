@@ -12,6 +12,9 @@ import "@/firebase";
 import router from "@/router";
 import store from "@/store";
 
+/* Load i18n translations */
+import "@/i18n";
+
 /* Load our App component, the root UI element */
 import App from "@/App.vue";
 
