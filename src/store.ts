@@ -12,6 +12,8 @@ import firebase from "firebase/app";
 /** Reference to the "locations" Firestore collection */
 export const locationCollection = firebase.firestore().collection("locations");
 
+/** LocalStorage key that contains the dark mode setting */
+export const localStorageDarkKey = "covid-occupancy-tracker-dark";
 /** LocalStorage key that contains the last valid ID */
 export const localStorageIDKey = "covid-occupancy-tracker-last-id";
 
@@ -27,6 +29,9 @@ export interface DatabaseLocation {
 
 /** State structure */
 export interface State {
+	/** App using dark mode? */
+	dark: boolean;
+
 	/** Information about the current location */
 	location: {
 		/** Location data, including person count */
@@ -41,12 +46,16 @@ export interface State {
 
 /** Mutation enum, used by store.commit() <sync> */
 export enum Mutation {
+	SetDark		= "set:dark",
 	SetPeople	= "set:location/data/people",
 	SetID		= "set:location/id",
 	SetSubscription	= "set:location/subscription"
 }
 /** Action enum, used by store.dispatch() <async> */
 export enum Action {
+	DarkSet			= "darkSet",
+	DarkLoad		= "darkLoad",
+
 	IDSave			= "idSave",
 	IDLoad			= "idLoad",
 
@@ -60,6 +69,7 @@ export enum Action {
 /** Global COT Vuex store instance */
 export const store = new Vuex.Store<State>({
 	state: {
+		dark: false,
 		location: {
 			data: { people: 0 },
 			id: null,
@@ -69,6 +79,10 @@ export const store = new Vuex.Store<State>({
 	getters: {
 	},
 	mutations: {
+		/** Set the `.dark` field to a boolean */
+		[Mutation.SetDark](state, dark: State["dark"]) {
+			state.dark = dark;
+		},
 		/** Set the `.location.data.people` field to a whole number */
 		[Mutation.SetPeople](state, people: State["location"]["data"]["people"]) {
 			state.location.data.people = asWhole(people);
@@ -83,6 +97,26 @@ export const store = new Vuex.Store<State>({
 		}
 	},
 	actions: {
+		/** Update and save the current `.dark` value */
+		[Action.DarkSet]: async (store, dark: boolean) => {
+			store.commit(Mutation.SetDark, !!dark);
+			try {
+				localStorage.setItem(localStorageDarkKey, JSON.stringify(store.state.dark));
+			} catch (err) {
+				console.error(`Failed to update "${localStorageDarkKey}" in LocalStorage:`, err);
+			}
+		},
+		/** Load the last `.dark` value from LocalStorage */
+		[Action.DarkLoad]: async (store) => {
+			try {
+				const data = localStorage.getItem(localStorageDarkKey);
+				const dark: boolean = data !== null ? !!JSON.parse(data) : false;
+				store.commit(Mutation.SetDark, dark);
+			} catch (err) {
+				console.error(`Failed to read "${localStorageDarkKey}" from LocalStorage:`, err);
+			}
+		},
+
 		/** Save the current `.location.id` field to LocalStorage */
 		[Action.IDSave]: async (store) => {
 			try {
@@ -106,6 +140,7 @@ export const store = new Vuex.Store<State>({
 				console.error(`Failed to read "${localStorageIDKey}" from LocalStorage:`, err);
 			}
 		},
+
 		/** "Connect" to a location in the database and stay in sync */
 		[Action.LocationConnect]: async (store, id: string) => {
 			/* Guard against invalid IDs (currently accepting all truthy strings) */
@@ -177,6 +212,7 @@ export const store = new Vuex.Store<State>({
 
 			await store.dispatch(Action.IDSave);
 		},
+
 		/** Set the current people count, updating the database if possible */
 		[Action.CountSet]: async (store, people: number) => {
 			/* Guard against invalid people counts (currently accepting all non-negative numbers) */
@@ -254,7 +290,7 @@ export const store = new Vuex.Store<State>({
 });
 export default store;
 
-/** Once the store has been set up, attempt to reconnect to the last known location */
+/* Once the store has been set up, attempt to reconnect to the last known location */
 store.dispatch(Action.IDLoad)
 	.then(() => {
 		if (store.state.location.id) {
@@ -262,7 +298,9 @@ store.dispatch(Action.IDLoad)
 		} else {
 			return;
 		}
-	})
-	.catch((err) => {
-		console.error("Initial store setup failed:", err);
 	});
+
+/* Load the current darkmode setting as well */
+store.dispatch(Action.DarkLoad);
+
+Object.assign(window, { store });

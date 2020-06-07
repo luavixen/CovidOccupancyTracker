@@ -1,9 +1,12 @@
 <!-- src/App.vue
-	Root Vue component, shows the current router view and not much else -->
+	Root Vue app component, sets up the theme container, renders the view, and not much else -->
 
 <template>
-	<div class="cot-app" id="app">
-		<router-view class="cot-app-view" />
+	<div
+		class="cot-app-container" id="app"
+		:class="{ ['theme-' + ($store.state.dark ? 'dark' : 'light')]: true }"
+	>
+		<div class="cot-app" role="application"><router-view class="cot-app-view" /></div>
 	</div>
 </template>
 

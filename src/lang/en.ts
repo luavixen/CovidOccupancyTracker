@@ -16,8 +16,7 @@ export default {
 		loading: "Loading"
 	},
 
-	app: {
-		title: "Covid Occupancy Tracker",
-		titleShort: "COT"
+	header: {
+		brand: "Tracker"
 	}
 };

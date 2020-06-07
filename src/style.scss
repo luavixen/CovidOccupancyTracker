@@ -1,22 +1,138 @@
 /* src/style.css
 	Global stylesheet, loaded from src/index.ts */
 
-/* Global styles for all elements */
-*, *::before, *::after {
-	/* Use border-box CSS box model
-		https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing */
-	box-sizing: border-box;
-	/* Disable built-in outlines */
-	outline: 0;
-	/* Set global font family to use */
-	font-family: 'Open Sans', Arial, Helvetica, sans-serif;	
+/* Monochrome colors */
+$white:		#ffffff;
+$gray-100:	#f5f5f5;
+$gray-200:	#eeeeee;
+$gray-300:	#e0e0e0;
+$gray-400:	#bdbdbd;
+$gray-500:	#9e9e9e;
+$gray-600:	#757575;
+$gray-700:	#616161;
+$gray-800:	#424242;
+$gray-900:	#212121;
+$black:		#000000;
+
+/* Accent colors */
+$accent:	#673ab7;
+$accent-light:	#9a67ea;
+$accent-dark:	#320b86;
+
+/* Error colors */
+$error:		#dc3545;
+$error-light:	#ff6b70;
+$error-dark:	#a3001e;
+
+/* Theme dictionary */
+$themes: (
+	light: (
+		level1: $white,
+		level2: $white,
+		level3: $white,
+		level4: $white,
+
+		text: $gray-900,
+		text-disabled: $gray-700,
+
+		accent: $accent,
+		accent-focus: $accent-light,
+		accent-text: $white,
+
+		error: $error,
+		error-focus: $error-light,
+		error-text: $white
+	),
+	dark: (
+		level1: $gray-900,
+		level2: $gray-800,
+		level3: $gray-700,
+		level4: $gray-600,
+
+		text: $gray-300,
+		text-disabled: $gray-600,
+
+		accent: $accent-light,
+		accent-focus: $accent,
+		accent-text: $white,
+
+		error: $error-light,
+		error-focus: $error,
+		error-text: $white
+	)
+);
+
+/* Theme dictionary "enumeration" */
+$level1:	"level1";
+$level2:	"level2";
+$level3:	"level3";
+$level4:	"level4";
+$text:		"text";
+$text-disabled:	"text-disabled";
+$accent:	"accent";
+$accent-focus:	"accent-focus";
+$accent-text:	"accent-text";
+$error:		"error";
+$error-focus:	"error-focus";
+$error-text:	"error-text";
+
+/* Mixin for generating different code for every theme */
+@mixin themed() {
+	@each $theme, $map in $themes {
+		.theme-#{$theme} & {
+			$theme-map: () !global;
+			@each $key, $submap in $map {
+				$value: map-get(map-get($themes, $theme), '#{$key}');
+				$theme-map: map-merge($theme-map, ($key: $value)) !global;
+			}
+			@content;
+			$theme-map: null !global;
+		}
+	}
+}
+/* Utility function for grabbing colors from the themed() mixin */
+@function t($key) {
+	@return map-get($theme-map, $key);
 }
 
-/* Use Roboto as the font for headers */
+/* Utility class to disable selection of something */
+.cot-noselect, .cot-noselect::before, .cot-noselect::after {
+	user-select: none;
+}
+/* Utility class to disable interaction with something */
+.cot-nointeract, .cot-nointeract::before, .cot-nointeract::after {
+	user-select: none;
+	pointer-events: none;
+}
+
+/* Default global styles (all elements) */
+*, *::before, *::after {
+	/* Use border-box CSS box model for easier sizing
+		https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing */
+	box-sizing: border-box;
+
+	/* Built-in outlines are ugly, remove them */
+	outline: 0;
+
+	/* All text (except headers) should use Open Sans */
+	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+/* Headers use the Roboto font */
 h1, h2, h3, h4, h5, h6 { font-family: 'Roboto', Arial, Helvetica, sans-serif; }
 
-/* Lock the COT app container to fill the whole page, no matter what */
+/* Recommended margins */
+$margin-small: 8px;
+$margin-medium: 16px;
+$margin-large: 32px;
+/* Recommended paddings */
+$padding-small: 8px;
+$padding-medium: 16px;
+$padding-large: 32px;
+
+/* Root (app) element styles */
 .cot-app {
+	/* Fill the whole page, always */
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -24,4 +140,56 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Roboto', Arial, Helvetica, sans-serif; }
 	bottom: 0;
 	margin: 0; padding: 0; border: 0;
 	overflow: hidden;
+
+	/* Use current theme colors */
+	@include themed() {
+		background-color: t($level1);
+		color: t($text);
+	}
+
+	/* Make the view (attempt) to fill the whole screen too */
+	> .cot-view {
+		width: 100%;
+		height: 100%;
+	}
+}
+
+/* Total size of the header */
+$header-size: 64px;
+/* Maximum width of header content */
+$header-max-width: 1000px;
+/* Header.vue styles */
+.cot-header {
+	display: flex;
+	justify-content: center;
+
+	width: 100%;
+	height: $header-size;
+
+	@include themed() {
+		background-color: t($accent);
+		color: t($accent-text);
+	}
+
+	> .cot-header-inner {
+		/* Use Flexbox for left/right align */
+		display: flex;
+
+		width: 100%;
+		max-width: $header-max-width;
+		height: 100%;
+
+		margin-left: $margin-medium; margin-right: $margin-medium;
+	}
+}
+
+.cot-header-brand {
+	display: flex;
+	align-items: center;
+
+	height: 100%;
+
+	> .cot-header-brand-text {
+		margin: 0;
+	}
 }
