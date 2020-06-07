@@ -21,6 +21,9 @@ import App from "@/App.vue";
 /* Import and apply the src/style.scss stylesheet globally */
 import "@/style.scss";
 
+/* Enable the :focus-visible CSS selector polyfill */
+import "focus-visible";
+
 /* Create and mount our Vue UI */
 new Vue({
 	router,
