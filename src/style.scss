@@ -137,14 +137,29 @@ $weight-thinner: 200;
 $weight-boldish: 500;
 $weight-bold: 600;
 
-/* Utility class to disable selection of something */
-.cot-noselect, .cot-noselect::before, .cot-noselect::after {
+/* Mixin that disables selections */
+@mixin noselect() {
 	user-select: none;
 }
-/* Utility class to disable interaction with something */
-.cot-nointeract, .cot-nointeract::before, .cot-nointeract::after {
-	user-select: none;
+/* Mixin that disables all interactions */
+@mixin nointeract() {
+	@include noselect();
 	pointer-events: none;
+}
+
+/* mixin that hides all overflow */
+@mixin nooverflow() {
+	overflow: hidden;
+}
+
+/* Mixin that forces all text onto one line */
+@mixin oneline() {
+	white-space: nowrap;
+}
+/* Mixin that forces all text onto one line with a dotdotdot ... */
+@mixin oneline-ellipsis() {
+	@include oneline();
+	text-overflow: ellipsis;
 }
 
 /* Default global styles (all elements) */
@@ -187,8 +202,8 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Roboto', Arial, Helvetica, sans-serif; }
 	}
 
 	> span {
-		white-space: nowrap;
-		text-overflow: ellipsis;
+		@include noselect();
+		@include oneline-ellipsis();
 
 		font-weight: $weight-bold;
 	}
@@ -242,13 +257,16 @@ $iconbutton-inner-pressed: 28;
 
 	transition: background-color 0.15s, border-color 0.15s;
 
-	> .cot-button-icon-image {
+	> .cot-button-image-icon {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 
 		width: 100%;
 		height: 100%;
+
+		@include nointeract();
+		@include nooverflow();
 
 		> svg {
 			display: block;
@@ -321,7 +339,9 @@ $iconbutton-inner-pressed: 28;
 	right: 0;
 	bottom: 0;
 	margin: 0; padding: 0; border: 0;
-	overflow: hidden;
+
+	/* Prevent any overflow/scrollbars */
+	@include nooverflow();
 
 	/* Use current theme colors */
 	@include themed() {
@@ -347,7 +367,7 @@ $header-max-width: 1000px;
 	max-width: 100%;
 	height: $header-size;
 
-	overflow: hidden;
+	@include nooverflow();
 
 	@include themed() {
 		background-color: t($_accent);
@@ -381,6 +401,9 @@ $header-max-width: 1000px;
 	height: 100%;
 
 	> .cot-header-brand-text {
+		@include noselect();
+		@include oneline();
+
 		margin: 0;
 	}
 }
@@ -401,6 +424,8 @@ $header-max-width: 1000px;
 
 		/* Style the text */
 		> p {
+			@include noselect();
+
 			margin: 0;
 
 			font-weight: $weight-bold;

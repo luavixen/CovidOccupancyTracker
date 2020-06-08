@@ -3,7 +3,7 @@
 
 <template>
 	<div class="cot-header-brand">
-		<h2 class="cot-header-brand-text cot-noselect">{{ $t("header.brand") }}</h2>
+		<h2 class="cot-header-brand-text">{{ $t("header.brand") }}</h2>
 	</div>
 </template>
 

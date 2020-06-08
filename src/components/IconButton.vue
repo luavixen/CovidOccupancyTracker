@@ -13,7 +13,7 @@
 		@boop="$emit('boop', $event)"
 	>
 		<div
-			class="cot-button-icon-image no-interact"
+			class="cot-button-image-icon"
 			aria-hidden="true"
 		><slot /></div>
 	</Button>

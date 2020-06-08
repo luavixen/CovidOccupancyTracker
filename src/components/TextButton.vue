@@ -7,7 +7,7 @@
 		:disabled="disabled"
 		@boop="$emit('boop', $event)"
 	>
-		<span class="cot-noselect"><slot /></span>
+		<span><slot /></span>
 	</Button>
 </template>
 
