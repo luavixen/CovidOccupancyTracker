@@ -10,7 +10,7 @@ import "firebase/performance";
 import "firebase/firestore";
 
 /* Import the configuration from config.js */
-import firebaseConfig from "@/config";
+import { firebaseConfig } from "@/config";
 /* Initialize the Firebase SDK */
 firebase.initializeApp(firebaseConfig);
 
