@@ -9,7 +9,9 @@
 			</div>
 			<div class="cot-header-right">
 				<HeaderLocation />
-				<slot />
+				<IconButton :title="$t('header.settings')" @boop="openSettings">
+					<IconSettings/>
+				</IconButton>
 			</div>
 		</div>
 	</header>
@@ -19,7 +21,16 @@
 import { Component, Vue } from "vue-property-decorator";
 
 import HeaderBrand from "@/components/HeaderBrand.vue";
+import HeaderLocation from "@/components/HeaderLocation.vue";
+import IconButton from "@/components/IconButton.vue";
 
-@Component({ components: { HeaderBrand } })
-export default class Header extends Vue {}
+// @ts-ignore
+import IconSettings from "@/assets/settings.svg";
+
+@Component({ components: { HeaderBrand, HeaderLocation, IconButton, IconSettings } })
+export default class Header extends Vue {
+	openSettings() {
+		/* TODO */
+	}
+}
 </script>

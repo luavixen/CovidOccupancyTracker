@@ -117,6 +117,26 @@ $_error-text:		"error-text";
 	@return map-get($theme-map, $key);
 }
 
+/* Recommended margins */
+$margin-small: 8px;
+$margin-medium: 16px;
+$margin-large: 32px;
+/* Recommended paddings */
+$padding-small: 8px;
+$padding-medium: 16px;
+$padding-large: 32px;
+/* Recommended border radiuses */
+$radius-small: 4px;
+$radius-medium: 6px;
+$radius-large: 12px;
+$radius-50: 50%;
+/* Recommended font weights */
+$weight-normal: 400;
+$weight-thin: 300;
+$weight-thinner: 200;
+$weight-boldish: 500;
+$weight-bold: 600;
+
 /* Utility class to disable selection of something */
 .cot-noselect, .cot-noselect::before, .cot-noselect::after {
 	user-select: none;
@@ -134,23 +154,11 @@ $_error-text:		"error-text";
 
 	/* All text (except headers) should use Open Sans */
 	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+	/* All text should default to normal weight */
+	font-weight: $weight-normal;
 }
 /* Headers use the Roboto font */
 h1, h2, h3, h4, h5, h6 { font-family: 'Roboto', Arial, Helvetica, sans-serif; }
-
-/* Recommended margins */
-$margin-small: 8px;
-$margin-medium: 16px;
-$margin-large: 32px;
-/* Recommended paddings */
-$padding-small: 8px;
-$padding-medium: 16px;
-$padding-large: 32px;
-/* Recommended border radiuses */
-$radius-small: 4px;
-$radius-medium: 6px;
-$radius-large: 12px;
-$radius-50: 50%;
 
 /* Button styles */
 .cot-button {
@@ -182,7 +190,7 @@ $radius-50: 50%;
 		white-space: nowrap;
 		text-overflow: ellipsis;
 
-		font-weight: 600;
+		font-weight: $weight-bold;
 	}
 }
 /* TextButton hover */
@@ -328,17 +336,18 @@ $iconbutton-inner-pressed: 28;
 	}
 }
 
-/* Total size of the header */
+/* Header styles */
 $header-size: 64px;
-/* Maximum width of header content */
 $header-max-width: 1000px;
-/* Header.vue styles */
 .cot-header {
 	display: flex;
 	justify-content: center;
 
 	width: 100%;
+	max-width: 100%;
 	height: $header-size;
+
+	overflow: hidden;
 
 	@include themed() {
 		background-color: t($_accent);
@@ -346,7 +355,6 @@ $header-max-width: 1000px;
 	}
 
 	> .cot-header-inner {
-		/* Use Flexbox for left/right align */
 		display: flex;
 
 		width: 100%;
@@ -354,16 +362,51 @@ $header-max-width: 1000px;
 		height: 100%;
 
 		margin-left: $margin-medium; margin-right: $margin-medium;
+
+		> div > div {
+			vertical-align: top;
+		}
+
+		/* Make the left side take up as much width as possible */
+		> .cot-header-left {
+			margin-right: auto;
+		}
 	}
 }
-
+/* HeaderBrand styles */
 .cot-header-brand {
-	display: flex;
+	display: inline-flex;
 	align-items: center;
 
 	height: 100%;
 
 	> .cot-header-brand-text {
 		margin: 0;
+	}
+}
+/* HeaderLocation styles */
+.cot-header-location {
+	/* Use this div to align the text horizontally */
+	display: inline-flex;
+	align-items: center;
+
+	height: 100%;
+
+	/* Use a second div to align the text vertically */
+	> .cot-header-location-inner {
+		display: flex;
+		flex-direction: column;
+
+		text-align: right;
+
+		/* Style the text */
+		> p {
+			margin: 0;
+
+			font-weight: $weight-bold;
+		}
+		> .cot-header-location-title {
+			font-size: 0.75em;
+		}
 	}
 }

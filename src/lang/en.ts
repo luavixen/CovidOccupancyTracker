@@ -4,19 +4,14 @@
 export default {
 	hello: "Hewwo! UwU~",
 
-	ui: {
-		yes: "Yes",
-		no: "No",
-		ok: "Ok",
-		cancel: "Cancel",
-		close: "Close",
-		delete: "Delete",
-		reset: "Reset",
-		save: "Save",
-		loading: "Loading"
-	},
-
 	header: {
-		brand: "Tracker"
+		brand: "Tracker",
+		location: {
+			title: "Current location",
+
+			offline: "Offline",
+			custom: "\"{name}\" (custom)"
+		},
+		settings: "Open the settings menu"
 	}
 };
