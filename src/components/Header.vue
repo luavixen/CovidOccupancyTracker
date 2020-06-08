@@ -9,6 +9,7 @@
 			</div>
 			<div class="cot-header-right">
 				<HeaderLocation />
+				<slot />
 			</div>
 		</div>
 	</header>

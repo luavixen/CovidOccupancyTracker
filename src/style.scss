@@ -14,11 +14,18 @@ $gray-800:		#424242;
 $gray-900:		#212121;
 $black:			#000000;
 
+/* Hover colors */
+$hover-shallow:		rgba(255, 255, 255, 0.3);
+$hover-more:		rgba(255, 255, 255, 0.4);
+$hover-medium:		rgba(255, 255, 255, 0.5);
+$hover-deep:		rgba(255, 255, 255, 0.7);
+
 /* Accent colors */
 $accent:		#673ab7;
 $accent-light:		#9a67ea;
 $accent-dark:		#320b86;
 $accent-hover:		rgba(154, 103, 234, 0.3);
+$accent-pressed:	rgba(154, 103, 234, 0.5);
 
 /* Error colors */
 $error:			#dc3545;
@@ -36,9 +43,13 @@ $themes: (
 		text: $gray-900,
 		text-disabled: $gray-700,
 
+		hover-hover: $hover-more,
+		hover-active: $hover-deep,
+
 		accent: $accent,
 		accent-focus: $accent-light,
 		accent-hover: $accent-hover,
+		accent-pressed: $accent-pressed,
 		accent-text: $white,
 
 		error: $error,
@@ -51,12 +62,16 @@ $themes: (
 		level3: $gray-700,
 		level4: $gray-600,
 
-		text: $gray-300,
-		text-disabled: $gray-600,
+		text: $gray-100,
+		text-disabled: $gray-400,
+
+		hover-hover: $hover-shallow,
+		hover-active: $hover-medium,
 
 		accent: $accent-light,
 		accent-focus: $accent,
 		accent-hover: $accent-hover,
+		accent-pressed: $accent-pressed,
 		accent-text: $white,
 
 		error: $error-light,
@@ -72,9 +87,12 @@ $_level3:		"level3";
 $_level4:		"level4";
 $_text:			"text";
 $_text-disabled:	"text-disabled";
+$_hover_hover:		"hover-hover";
+$_hover_active:		"hover-active";
 $_accent:		"accent";
 $_accent-focus:		"accent-focus";
 $_accent-hover:		"accent-hover";
+$_accent-pressed:	"accent-pressed";
 $_accent-text:		"accent-text";
 $_error:		"error";
 $_error-focus:		"error-focus";
@@ -134,6 +152,11 @@ $radius-medium: 6px;
 $radius-large: 12px;
 $radius-50: 50%;
 
+/* Button styles */
+.cot-button {
+	cursor: pointer;
+}
+
 /* TextButton styles */
 .cot-button-text {
 	display: inline-block;
@@ -187,7 +210,98 @@ $radius-50: 50%;
 	background-color: $accent-hover;
 }
 .theme-light .cot-button-text.cot-button-pressed {
-	background-color: $accent-light;
+	background-color: $accent-pressed;
+}
+
+/* IconButton styles */
+$iconbutton-outer: 48px;
+$iconbutton-inner: 32;
+$iconbutton-inner-pressed: 28;
+.cot-button-image {
+	display: inline-block;
+
+	width: $iconbutton-outer;
+	height: $iconbutton-outer;
+
+	margin: $margin-small;
+
+	border-radius: $radius-50;
+	border-width: 1px;
+	border-style: solid;
+	border-color: transparent;
+
+	background-color: transparent;
+
+	transition: background-color 0.15s, border-color 0.15s;
+
+	> .cot-button-icon-image {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		width: 100%;
+		height: 100%;
+
+		> svg {
+			display: block;
+
+			transform: scale($iconbutton-inner / 24);
+			transition: transform 0.15s;
+
+			path {
+				@include themed() {
+					fill: t($_text);
+				}
+			}
+		}
+	}
+}
+.cot-button-image.cot-button-pressed > .cot-button-icon-image > svg {
+	transform: scale($iconbutton-inner-pressed / 24);
+}
+/* Special IconButton theme for accent backgrounds */
+.cot-button-image.cot-button-image-accent {
+	.cot-button-icon-image > svg path {
+		@include themed() {
+			fill: t($_accent-text) !important;
+		}
+	}
+}
+.cot-button-image.cot-button-image-accent:hover, .cot-button-image.cot-button-image-accent[data-focus-visible-added] {
+	@include themed() {
+		background-color: t($_hover_hover) !important;
+	}
+}
+.cot-button-image.cot-button-image-accent[data-focus-visible-added] {
+	border-color: $white !important;
+}
+.cot-button-image.cot-button-image-accent.cot-button-pressed {
+	@include themed() {
+		border-color: t($_hover_hover) !important;
+		background-color: t($_hover_active) !important;
+	}
+}
+/* IconButton custom dark styles */
+.theme-dark .cot-button-image:hover, .theme-dark .cot-button-image[data-focus-visible-added] {
+	background-color: $hover-shallow;
+}
+.theme-dark .cot-button-image[data-focus-visible-added] {
+	border-color: $white;
+}
+.theme-dark .cot-button-image.cot-button-pressed {
+	border-color: $hover-shallow;
+	background-color: $hover-medium;
+}
+/* IconButton custom light styles */
+.theme-light .cot-button-image:hover, .theme-light .cot-button-image[data-focus-visible-added] {
+	background-color: $accent-hover;
+}
+.theme-light .cot-button-image[data-focus-visible-added] {
+	border-color: $accent;
+}
+.theme-light .cot-button-image.cot-button-pressed {
+	border-color: $accent;
+	background-color: $accent-pressed;
 }
 
 /* Root (app) element styles */
