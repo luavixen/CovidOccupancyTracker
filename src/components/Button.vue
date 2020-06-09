@@ -44,25 +44,23 @@ export default class Button extends Vue {
 		this.$emit("boop", event);
 	}
 
-	/* Hack to fix a bug where you can press a button and then move the mouse cursor away to break the pressed state */
-	unpressCallback: ((event: any) => void) | null = null;
+	/** Unpress this button whenever the space/enter/mouse1 keys are released *anywhere on the page* */
+	protected unpressHandler(event: any) {
+		if (typeof event === "object" && (
+			event.code === "Space" ||
+			event.code === "Enter" ||
+			event.button === 0
+		)) this.pressed = false;
+	};
+
+	/* Register/unregister the unpressHandler */
 	mounted() {
-		this.unpressCallback = (event: any) => {
-			if (typeof event === "object" && !(
-				event.code === "Space" ||
-				event.code === "Enter" ||
-				event.button === 0
-			)) return;
-			this.pressed = false;
-		};
-		window.addEventListener("mouseup", this.unpressCallback);
-		window.addEventListener("keyup", this.unpressCallback);
+		window.addEventListener("mouseup", this.unpressHandler);
+		window.addEventListener("keyup", this.unpressHandler);
 	}
 	destroyed() {
-		if (this.unpressCallback) {
-			window.removeEventListener("mouseup", this.unpressCallback);
-			window.removeEventListener("keyup", this.unpressCallback);
-		}
+		window.removeEventListener("mouseup", this.unpressHandler);
+		window.removeEventListener("keyup", this.unpressHandler);
 	}
 }
 </script>

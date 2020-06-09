@@ -48,9 +48,13 @@ export default class ModalManager extends Vue {
 	}
 
 	/** Handler for ModalShown */
-	modalShownHandler = (id: string) => this.addModal(id);
+	protected modalShownHandler(id: string) {
+		this.addModal(id);
+	}
 	/** Handler for ModalHidden */
-	modalHiddenHandler = (id: string) => this.removeModal(id);
+	protected modalHiddenHandler(id: string) {
+		this.removeModal(id);
+	}
 
 	/* Register and de-register handlers */
 	mounted() {

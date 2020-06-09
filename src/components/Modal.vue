@@ -71,17 +71,17 @@ export default class Modal extends Vue {
 	@Prop({ type: String, required: true }) readonly modalId!: string;
 
 	/** Handle keyup events for the Escape key, to hide this modal on escape */
-	escHandler = (event: any) => {
+	protected escHandler(event: any) {
 		if (typeof event === "object" && event.code === "Escape")
 			this.hide();
-	};
+	}
 	/* Handle show/hide events */
-	showHandler = (id: any) => {
+	protected showHandler(id: any) {
 		if (id === this.modalId) this.show();
-	};
-	hideHandler = (id: any) => {
+	}
+	protected hideHandler(id: any) {
 		if (id === this.modalId) this.hide();
-	};
+	}
 
 	/* Register/unregister event handlers */
 	mounted() {
