@@ -136,6 +136,10 @@ $weight-thin: 300;
 $weight-thinner: 200;
 $weight-boldish: 500;
 $weight-bold: 600;
+/* Recommended transition lengths */
+$transition-short: 0.15s;
+$transition-medium: 0.2s;
+$transition-long: 0.4s;
 
 /* Mixin that disables selections */
 @mixin noselect() {
@@ -193,7 +197,7 @@ h1, h2, h3, h4, h5, h6 { font-family: 'Roboto', Arial, Helvetica, sans-serif; }
 	border-style: solid;
 	border-radius: $radius-small;
 
-	transition: background-color 0.15s, border-color 0.15s;
+	transition: background-color $transition-short, border-color $transition-short;
 
 	@include themed() {
 		border-color: t($_accent);
@@ -255,7 +259,7 @@ $iconbutton-inner-pressed: 28;
 
 	background-color: transparent;
 
-	transition: background-color 0.15s, border-color 0.15s;
+	transition: background-color $transition-short, border-color $transition-short;
 
 	> .cot-button-image-icon {
 		display: flex;
@@ -272,7 +276,7 @@ $iconbutton-inner-pressed: 28;
 			display: block;
 
 			transform: scale($iconbutton-inner / 24);
-			transition: transform 0.15s;
+			transition: transform $transition-short;
 
 			path {
 				@include themed() {
@@ -282,12 +286,12 @@ $iconbutton-inner-pressed: 28;
 		}
 	}
 }
-.cot-button-image.cot-button-pressed > .cot-button-icon-image > svg {
+.cot-button-image.cot-button-pressed > .cot-button-image-icon > svg {
 	transform: scale($iconbutton-inner-pressed / 24);
 }
 /* Special IconButton theme for accent backgrounds */
 .cot-button-image.cot-button-image-accent {
-	.cot-button-icon-image > svg path {
+	.cot-button-image-icon > svg path {
 		@include themed() {
 			fill: t($_accent-text) !important;
 		}
@@ -328,6 +332,68 @@ $iconbutton-inner-pressed: 28;
 .theme-light .cot-button-image.cot-button-pressed {
 	border-color: $accent;
 	background-color: $accent-pressed;
+}
+
+/* Modal styles */
+.cot-modal-container {
+	/* Center all content */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	/* Fill the whole page, always */
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: 0; padding: 0; border: 0;
+
+	/* Allow Y scrolling */
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	/* Fading background*/
+	background-color: rgba(0, 0, 0, 0.5);
+
+	/* Fucking go on top you bastard */
+	z-index: 1000;
+}
+/* Modal inner styles */
+$modalinner-max-width: 600px;
+.cot-modal {
+	width: 100%;
+	max-width: $modalinner-max-width;
+	/* height: auto; */
+
+	margin: $margin-medium;
+	padding: $padding-small;
+
+	border-radius: $radius-large;
+	border-width: 1px;
+	border-style: solid;
+
+
+	@include themed() {
+		border-color: t($_level2);
+		background-color: t($_level1);
+		color: t($_text);
+	}
+}
+/* Modal container fade-in animation */
+.modal-fade-enter-active, .modal-fade-leave-active {
+	transition: opacity $transition-medium;
+}
+.modal-fade-enter, .modal-fade-leave-to {
+	opacity: 0;
+}
+/* Modal fly-in animation */
+.modal-flyin-enter-active, .modal-flyin-leave-active {
+	transition: opacity $transition-medium, transform $transition-short;
+}
+.modal-flyin-enter, .modal-flyin-leave-to {
+	opacity: 0;
+	transform: translateY(-256px);
 }
 
 /* Root (app) element styles */
@@ -381,8 +447,6 @@ $header-max-width: 1000px;
 		max-width: $header-max-width;
 		height: 100%;
 
-		margin-left: $margin-medium; margin-right: $margin-medium;
-
 		> div > div {
 			vertical-align: top;
 		}
@@ -399,6 +463,8 @@ $header-max-width: 1000px;
 	align-items: center;
 
 	height: 100%;
+
+	margin-left: $margin-medium;
 
 	> .cot-header-brand-text {
 		@include noselect();

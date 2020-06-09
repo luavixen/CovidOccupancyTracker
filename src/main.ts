@@ -23,6 +23,8 @@ import "@/style.scss";
 
 /* Enable the :focus-visible CSS selector polyfill */
 import "focus-visible";
+/* Enable the inert polyfill */
+import "wicg-inert";
 
 /* Create and mount our Vue UI */
 new Vue({
