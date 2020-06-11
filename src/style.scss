@@ -158,6 +158,7 @@ $transition-long: 0.4s;
 
 /* Mixin that forces all text onto one line */
 @mixin oneline() {
+	@include nooverflow();
 	white-space: nowrap;
 }
 /* Mixin that forces all text onto one line with a dotdotdot ... */
@@ -372,7 +373,6 @@ $modalinner-max-width: 600px;
 	border-radius: $radius-large;
 	border-width: 1px;
 	border-style: solid;
-
 
 	@include themed() {
 		border-color: t($_level2);

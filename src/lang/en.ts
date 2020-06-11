@@ -13,5 +13,8 @@ export default {
 			custom: "\"{name}\" (custom)"
 		},
 		settings: "Open the settings menu"
+	},
+	settings: {
+		toggleTheme: "Toggle the current theme"
 	}
 };

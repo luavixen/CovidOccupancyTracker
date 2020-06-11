@@ -4,7 +4,7 @@
 <template>
 	<Modal class="cot-modal-settings" modal-id="settings" ref="modal">
 		<h1>UwU</h1>
-		<IconButton @boop="toggleTheme">
+		<IconButton :title="$t('settings.toggleTheme')" @boop="toggleTheme">
 			<IconThemeToggle/>
 		</IconButton>
 	</Modal>
