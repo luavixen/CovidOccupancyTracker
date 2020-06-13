@@ -335,6 +335,165 @@ $iconbutton-inner-pressed: 28;
 	background-color: $accent-pressed;
 }
 
+/* RadioButton styles */
+$radiobutton-size-total: 42px;
+$radiobutton-size-outer: 18px;
+$radiobutton-size-inner: 10px;
+$radiobutton-size-border: 2px;
+.cot-button-radio {
+	height: $radiobutton-size-total;
+
+	/* Always show the pointer cursor when hovering over this object */
+	* { cursor: pointer; }
+
+	/* All UI styles */
+	> .cot-button-radio-ui {
+		/* Vertically align everything centered */
+		display: flex;
+		align-items: center;
+
+		height: $radiobutton-size-total;
+
+		> .cot-button-radio-circle {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			/* Big enough for the outer button ring + border size */
+			width: $radiobutton-size-outer + ($radiobutton-size-border * 2);
+			height: $radiobutton-size-outer + ($radiobutton-size-border * 2);
+
+			/* Relative positioning for absolute .cot-button-radio-outer::before */
+			position: relative;
+
+			/* Margins on either side */
+			margin-left: $margin-medium; margin-right: $margin-medium;
+
+			/* Outer ring styles */
+			> .cot-button-radio-outer {
+				/* Center inner dot (no matter the size) */
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				width: $radiobutton-size-outer;
+				height: $radiobutton-size-outer;
+
+				border-radius: $radius-50;
+				border-width: $radiobutton-size-border;
+				border-style: solid;
+
+				transition: border-color $transition-medium;
+
+				@include themed() {
+					border-color: t($_text);
+				}
+
+				/* Inner circle styles */
+				> .cot-button-radio-inner {
+					/* Will be resized later */
+					width: 0;
+					height: 0;
+
+					border-radius: $radius-50;
+
+					background-color: transparent;
+
+					transition:
+						background-color $transition-medium,
+						width $transition-medium,
+						height $transition-medium;
+				}
+			}
+
+			/* Hover styles */
+			> .cot-button-radio-outer::before {
+				/* Show empty content that can be styled */
+				content: "";
+
+				display: block;
+
+				/* Force the width and height exactly */
+				width: $radiobutton-size-total;
+				min-width: $radiobutton-size-total;
+				max-width: $radiobutton-size-total;
+				height: $radiobutton-size-total;
+				min-height: $radiobutton-size-total;
+				max-height: $radiobutton-size-total;
+
+				/* Don't mess up positioning of the inner dot */
+				position: absolute;
+
+				border-radius: $radius-50;
+				border-width: 1px;
+				border-style: solid;
+				border-color: transparent;
+
+				background-color: transparent;
+
+				transition: background-color $transition-short, border-color $transition-short;
+			}
+		}
+
+		> .cot-button-radio-label {
+			@include noselect();
+			@include oneline-ellipsis();
+		}
+	}
+}
+/* RadioButton use accent color when checked + show inner dot */
+.cot-button-radio.cot-button-radio-checked > .cot-button-radio-ui > .cot-button-radio-circle > .cot-button-radio-outer {
+	@include themed() {
+		border-color: t($_accent);
+	}
+
+	/* Show inner dot */
+	> .cot-button-radio-inner {
+		width: $radiobutton-size-inner;
+		height: $radiobutton-size-inner;
+
+		@include themed() {
+			background-color: t($_accent);
+		}
+	}
+}
+/* RadioButton dark hover styles */
+.theme-dark .cot-button-radio:hover .cot-button-radio-outer::before,
+.theme-dark .cot-button-radio[data-focus-visible-added] .cot-button-radio-outer::before {
+	background-color: $hover-shallow;
+}
+.theme-dark .cot-button-radio[data-focus-visible-added] .cot-button-radio-outer::before {
+	border-color: $white;
+}
+/* RadioButton light hover styles */
+.theme-light .cot-button-radio:hover .cot-button-radio-outer::before ,
+.theme-light .cot-button-radio[data-focus-visible-added] .cot-button-radio-outer::before {
+	background-color: $accent-hover;
+}
+.theme-light .cot-button-radio[data-focus-visible-added] .cot-button-radio-outer::before {
+	border-color: $accent;
+}
+
+/* RadioList styles */
+.cot-radios {
+	/* Always stretch to fill the container */
+	width: 100%;
+
+	/* Header (title) styles */
+	> h2 {
+		display: block;
+
+		width: 100%;
+
+		/* Override top/bottom margins */
+		margin-top: 0;
+		margin-bottom: $margin-small;
+
+		@include noselect();
+		@include oneline-ellipsis();
+	}
+}
+
 /* Modal styles */
 .cot-modal-container {
 	/* Center all content */
