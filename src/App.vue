@@ -12,7 +12,6 @@
 			role="application"
 
 			:inert="inert"
-			:aria-hidden="inert"
 		>
 			<router-view class="cot-app-view" />
 		</div>
