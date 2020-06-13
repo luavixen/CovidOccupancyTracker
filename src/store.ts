@@ -12,6 +12,9 @@ import firebase from "firebase/app";
 /** Reference to the "locations" Firestore collection */
 export const locationCollection = firebase.firestore().collection("locations");
 
+/* Import locations for default location */
+import { getDefaultLocation } from "@/locations";
+
 /** LocalStorage key that contains the dark mode setting */
 export const localStorageDarkKey = "covid-occupancy-tracker-dark";
 /** LocalStorage key that contains the last valid ID */
@@ -290,13 +293,18 @@ export const store = new Vuex.Store<State>({
 });
 export default store;
 
-/* Once the store has been set up, attempt to reconnect to the last known location */
+/* Once the store has been set up, attempt to reconnect to the last known location or the default location */
 store.dispatch(Action.IDLoad)
 	.then(() => {
 		if (store.state.location.id) {
 			return store.dispatch(Action.LocationConnect, store.state.location.id);
 		} else {
-			return;
+			const defaultLocation = getDefaultLocation();
+			if (defaultLocation) {
+				return store.dispatch(Action.LocationConnect, defaultLocation.id);
+			} else {
+				return;
+			}
 		}
 	});
 
