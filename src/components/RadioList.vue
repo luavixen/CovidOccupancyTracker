@@ -1,23 +1,19 @@
 <template>
-	<div class="cot-radios">
-		<h2 :id="titleID">{{ title }}</h2>
-		<div
-			class="cot-radios-list"
-			role="radiogroup"
-			:aria-labelledby="titleID"
-		>
-			<RadioButton
-				v-for="radio of radios"
+	<div
+		class="cot-radios"
+		role="radiogroup"
+	>
+		<RadioButton
+			v-for="radio of radios"
 
-				:key="radio.id"
-				:id="radio.id"
+			:key="radio.id"
+			:id="radio.id"
 
-				:title="radio.title"
+			:title="radio.title"
 
-				:checked="isChecked(radio)"
-				@boop="onChecked(radio)"
-			/>
-		</div>
+			:checked="isChecked(radio)"
+			@boop="onChecked(radio)"
+		/>
 	</div>
 </template>
 
@@ -50,11 +46,6 @@ const getUniqueID = (() => {
 
 @Component({ components: { RadioButton } })
 export default class RadioList extends Vue {
-	/** Title/header for this list */
-	@Prop({ type: String, required: true }) readonly title!: string;
-	/** Unique ID of the header */
-	titleID: string = getUniqueID();
-
 	/** List of entries to render */
 	@Prop({ type: Array, required: true }) readonly list!: RadioListEntry[];
 

@@ -478,20 +478,6 @@ $radiobutton-size-border: 2px;
 .cot-radios {
 	/* Always stretch to fill the container */
 	width: 100%;
-
-	/* Header (title) styles */
-	> h2 {
-		display: block;
-
-		width: 100%;
-
-		/* Override top/bottom margins */
-		margin-top: 0;
-		margin-bottom: $margin-small;
-
-		@include noselect();
-		@include oneline-ellipsis();
-	}
 }
 
 /* Modal styles */
