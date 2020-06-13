@@ -593,6 +593,9 @@ html, body {
 	bottom: 0;
 	margin: 0; padding: 0; border: 0;
 
+	/* Make theme transitions smooth */
+	transition: color $transition-medium, background-color $transition-medium;
+
 	/* Prevent any overflow/scrollbars */
 	@include nooverflow();
 
@@ -619,6 +622,8 @@ $header-max-width: 1000px;
 	width: 100%;
 	max-width: 100%;
 	height: $header-size;
+
+	transition: color $transition-medium, background-color $transition-medium;
 
 	@include nooverflow();
 
@@ -686,5 +691,19 @@ $header-max-width: 1000px;
 		> .cot-header-location-title {
 			font-size: 0.75em;
 		}
+	}
+}
+
+/* Dashboard styles */
+.cot-dashboard {
+	/* Style the button bar at the bottom of the screen */
+	> .cot-dashboard-buttons {
+		display: flex;
+		justify-content: flex-end;
+
+		/* TODO: Extremely hacky */
+		position: fixed;
+		left: 0; right: 0;
+		bottom: 0;
 	}
 }

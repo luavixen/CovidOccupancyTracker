@@ -7,27 +7,31 @@
 		<Header><IconButton title="Open the settings menu" class="cot-button-image-accent"><IconSettings /></IconButton></Header>
 
 		<!-- App controls/body -->
-		<div />
-		<TextButton>{{ $t("ui.yes") }}</TextButton>
-		<TextButton color-error>{{ $t("ui.no") }}</TextButton>
-		<TextButton color-mono>{{ $t("ui.cancel") }}</TextButton>
-		<IconButton title="Open the settings menu"><IconSettings /></IconButton>
 
-		<!-- Footer -->
-		<div />
+		<!-- Footer buttons -->
+		<div class="cot-dashboard-buttons">
+			<IconButton :title="$t('dashboard.toggleTheme')" @boop="toggleTheme">
+				<IconThemeToggle />
+			</IconButton>
+		</div>
 	</div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
+import store, { Action } from "@/store";
+
 import Header from "@/components/Header.vue";
-import TextButton from "@/components/TextButton.vue";
 import IconButton from "@/components/IconButton.vue";
 
 // @ts-ignore
-import IconSettings from "@/assets/settings.svg";
+import IconThemeToggle from "@/assets/theme-toggle.svg";
 
-@Component({ components: { Header, TextButton, IconButton, IconSettings } })
-export default class Dashboard extends Vue {}
+@Component({ components: { Header, IconButton, IconThemeToggle } })
+export default class Dashboard extends Vue {
+	toggleTheme() {
+		store.dispatch(Action.DarkSet, !store.state.dark);
+	}
+}
 </script>
