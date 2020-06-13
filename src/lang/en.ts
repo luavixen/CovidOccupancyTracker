@@ -4,6 +4,10 @@
 export default {
 	hello: "Hewwo! UwU~",
 
+	modal: {
+		close: "Close this modal"
+	},
+
 	header: {
 		brand: "Tracker",
 		location: {
@@ -14,7 +18,12 @@ export default {
 		},
 		settings: "Open the settings menu"
 	},
+
 	settings: {
+		title: "Location"
+	},
+
+	dashboard: {
 		toggleTheme: "Toggle the current theme"
 	}
 };

@@ -513,11 +513,13 @@ $modalinner-max-width: 600px;
 	/* height: auto; */
 
 	margin: $margin-medium;
-	padding: $padding-small;
+	padding: $padding-medium;
 
 	border-radius: $radius-large;
 	border-width: 1px;
 	border-style: solid;
+
+	transition: color $transition-medium, background-color $transition-medium;
 
 	@include themed() {
 		border-color: t($_level2);
@@ -539,6 +541,46 @@ $modalinner-max-width: 600px;
 .modal-flyin-enter, .modal-flyin-leave-to {
 	opacity: 0;
 	transform: translateY(-256px);
+}
+
+/* ModalHeader styles */
+.cot-modal-header {
+	display: flex;
+
+	width: 100%;
+
+	> h2 {
+		display: block;
+
+		/* No top margin, keep bottom margin */
+		margin-top: 0;
+
+		flex: 1;
+	}
+
+	/* Re-position IconButton into the top-right corner */
+	> .cot-button-image {
+		/* Force width/height even if flex: 1 tries to break it */
+		width: $iconbutton-outer;
+		min-width: $iconbutton-outer;
+		max-width: $iconbutton-outer;
+		height: $iconbutton-outer;
+		min-height: $iconbutton-outer;
+		max-height: $iconbutton-outer;
+
+		/* Adjust margins */
+		margin-left: 0; margin-bottom: 0;
+		margin-top: -$margin-small; margin-right: -$margin-small;
+	}
+}
+
+/* <html>/<body> element styles */
+html, body {
+	/* Use current theme colors */
+	@include themed() {
+		background-color: t($_level1);
+		color: t($_text);
+	}
 }
 
 /* Root (app) element styles */
