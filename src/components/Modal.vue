@@ -8,7 +8,12 @@
 		@click.self="hide"
 	>
 		<transition name="flyin">
-			<div class="cot-modal" v-show="showContent" @click.stop><slot /></div>
+			<div
+				class="cot-modal"
+				role="dialog"
+				v-show="showContent"
+				@click.stop
+			><slot /></div>
 		</transition>
 	</div></transition>
 </template>
