@@ -2,12 +2,12 @@
 	Modal implementation, displays an animated modal that takes up the whole screen -->
 
 <template>
-	<transition name="modal-fade"><div
+	<transition name="fade"><div
 		class="cot-modal-container"
 		v-if="showContainer"
 		@click.self="hide"
 	>
-		<transition name="modal-flyin">
+		<transition name="flyin">
 			<div class="cot-modal" v-show="showContent" @click.stop><slot /></div>
 		</transition>
 	</div></transition>

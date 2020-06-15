@@ -2,12 +2,12 @@
 	Header component, displays a header at the top of the page -->
 
 <template>
-	<header class="cot-header cot-shadow" role="banner">
-		<div class="cot-header-inner">
-			<div class="cot-header-left">
+	<header class="cot-header" role="banner">
+		<div class="cot-header-content">
+			<div class="cot-header-section cot-header-left">
 				<HeaderBrand />
 			</div>
-			<div class="cot-header-right">
+			<div class="cot-header-section cot-header-right">
 				<HeaderLocation />
 				<IconButton accent :title="$t('header.settings')" @boop="openSettings">
 					<IconSettings/>

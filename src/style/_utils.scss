@@ -1,0 +1,65 @@
+/* src/style/_utils.scss
+	Styling utilities like preset variables and mixins */
+
+/* Recommended font weight values */
+$weight-normal:		400;
+$weight-thin:		300;
+$weight-thinner:	200;
+$weight-boldish:	500;
+$weight-bold:		600;
+
+/* Recommended margin values */
+$margin-small:		8px;
+$margin-medium:		16px;
+$margin-large:		32px;
+/* Recommended padding values */
+$padding-small:		8px;
+$padding-medium:	16px;
+$padding-large:		32px;
+
+/* Recommended border radius values */
+$radius-small:		4px;
+$radius-medium:		6px;
+$radius-large:		12px;
+$radius-50:		50%;
+/* Recommended border width values */
+$border-thin:		1px;
+$border-thick:		2px;
+
+/* Recommended transition time values*/
+$transition-short:	0.15s;
+$transition-medium:	0.2s;
+$transition-long:	0.4s;
+
+/* Don't allow the user to select this element */
+@mixin no-select() {
+	user-select: none;
+}
+/* Don't allow any interaction */
+@mixin no-interact() {
+	@include no-select();
+	pointer-events: none;
+}
+
+/* Disallow overflow of content outside this container */
+@mixin no-overflow() {
+	overflow: hidden;
+}
+
+/* Render text on one line, even if it gets cut off */
+@mixin one-line() {
+	@include no-overflow();
+	white-space: nowrap;
+}
+/* Render text on one line, with dot-dot-dot */
+@mixin one-line-ellipsis() {
+	@include one-line();
+	text-overflow: ellipsis;
+}
+
+/* Render content only on devices that support proper hovering */
+@mixin can-hover() {
+	@media (hover: hover) {
+		@content;
+	}
+}

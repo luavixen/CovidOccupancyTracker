@@ -1,0 +1,552 @@
+/* src/style/style.scss
+	Root SCSS stylesheet, defines styles for all actual UI elements */
+
+@import "theme";
+@import "utils";
+@import "animation";
+
+/* Styles for all elements */
+*, *::before, *::after {
+	outline: none; /* Disable ugly default outlines */
+
+	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+	font-weight: $weight-normal;
+}
+/* Use the Roboto font for headers */
+h1, h2, h3, h4, h5, h6 { font-family: 'Roboto', Arial, Helvetica, sans-serif; }
+
+
+/* <html>, <body> styles, sets default colors */
+html, body {
+	@include themed() {
+		background-color: t($_level1);
+		color: t($_text);
+	}
+}
+
+/* App.vue styles */
+.cot-app {
+	position: fixed;
+	left: 0; top: 0; right: 0; bottom: 0;
+	margin: 0; padding: 0; border: 0;
+
+	@include no-overflow();
+	@include animated-color();
+
+	@include themed() {
+		background-color: t($_level1);
+		color: t($_text);
+	}
+
+	/* Make the inner view fill the screen */
+	> .cot-view { width: 100%; height: 100%; }
+}
+
+/* Dashboard.vue styles */
+/* .cot-dashboard {} */
+
+/* Header.vue styles */
+$header-size: 66px;
+$header-max-width: 1000px;
+.cot-header {
+	width: 100%;
+	height: $header-size;
+
+	@include no-overflow();
+	@include animated-color();
+
+	@include themed() {
+		background-color: t($_accent);
+		color: t($_accent-text);
+	}
+
+	/* Align content */
+	> .cot-header-content {
+		display: flex;
+
+		width: 100%;
+		max-width: $header-max-width;
+		height: $header-size;
+
+		margin-left: auto; margin-right: auto;
+
+		> .cot-header-left { margin-right: auto; }
+		> .cot-header-section > * { vertical-align: top; }
+	}
+}
+/* HeaderBrand.vue styles */
+.cot-header-brand {
+	display: inline-flex;
+	align-items: center;
+
+	height: 100%;
+
+	margin-left: $margin-medium;
+
+	> .cot-header-brand-text {
+		margin: 0;
+
+		@include no-select();
+		@include one-line();
+	}
+}
+/* HeaderLocation.vue styles */
+.cot-header-location {
+	display: inline-flex;
+	align-items: center;
+
+	height: 100%;
+
+	> .cot-header-location-inner {
+		display: flex;
+		flex-direction: column;
+
+		text-align: right;
+
+		> p {
+			margin: 0;
+
+			font-weight: $weight-bold;
+
+			@include no-select();
+		}
+		> .cot-header-location-title { font-size: 0.75em; }
+	}
+}
+
+/* TextButton.vue styles */
+.cot-button-text {
+	display: inline-block;
+
+	margin: $margin-small;
+
+	padding-left: 6px; padding-right: 6px;
+	padding-top: 2px; padding-bottom: 2px;
+
+	border-radius: $radius-small;
+	border-width: $border-thin;
+	border-style: solid;
+
+	transition: $animated-color, $animated-border;
+
+	@include themed() {
+		border-color: t($_accent);
+		background-color: t($_accent);
+		color: t($_accent-text);
+	}
+
+	> span {
+		@include no-select();
+		@include one-line-ellipsis();
+
+		font-weight: $weight-bold;
+	}
+}
+/* Uni-theme hover styles */
+@mixin textbutton-default-hover() {
+	@include themed() {
+		border-color: t($_accent-focus);
+		background-color: t($_accent-focus);
+	}
+}
+@include can-hover() { .cot-button-text:hover {
+	@include textbutton-default-hover();
+} }
+.cot-button-text[data-focus-visible-added] { @include textbutton-default-hover(); }
+/* Light TextButton styles */
+@mixin textbutton-light-default() {
+	background-color: transparent;
+	color: $accent;
+}
+@mixin textbutton-light-hover() {
+	background-color: $accent-hover;
+}
+@mixin textbutton-light-pressed() {
+	background-color: $accent-pressed;
+}
+.theme-light {
+	.cot-button-text { @include textbutton-light-default(); }
+	@include can-hover() { .cot-button-text:hover {
+		@include textbutton-light-hover();
+	} }
+	.cot-button-text[data-focus-visible-added] { @include textbutton-light-hover(); }
+	.cot-button-text.cot-button-pressed { @include textbutton-light-pressed(); }
+}
+/* Dark TextButton styles */
+@mixin textbutton-dark-focus() {
+	border-color: $white;
+}
+@mixin textbutton-dark-pressed() {
+	border-color: $accent-dark;
+	background-color: $accent-dark;
+}
+.theme-dark {
+	.cot-button-text[data-focus-visible-added] { @include textbutton-dark-focus(); }
+	.cot-button-text.cot-button-pressed { @include textbutton-dark-pressed(); }
+}
+
+/* IconButton.vue styles */
+$iconbutton-outer: 48px;
+$iconbutton-inner: 32;
+$iconbutton-inner-pressed: 28;
+/* Initial button styles */
+.cot-button-image {
+	display: inline-block;
+
+	width: $iconbutton-outer;
+	height: $iconbutton-outer;
+
+	margin: $margin-small;
+
+	border-radius: $radius-50;
+	border-width: $border-thin;
+	border-style: solid;
+	border-color: transparent;
+
+	background-color: transparent;
+
+	transition: $animated-color, $animated-border;
+
+	> .cot-button-image-icon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		width: 100%;
+		height: 100%;
+
+		@include no-select();
+		@include no-overflow();
+
+		> svg {
+			display: block;
+
+			transform: scale($iconbutton-inner / 24);
+
+			@include animated-transform();
+
+			path {
+				@include themed() {
+					fill: t($_text);
+				}
+			}
+		}
+	}
+}
+/* Scale image size down when pressed */
+.cot-button-image.cot-button-pressed > .cot-button-image-icon > svg {
+	transform: scale($iconbutton-inner-pressed / 24);
+}
+/* Accent IconButton theme, for backgrounds that use accent colors */
+@mixin iconbutton-accent-default() {
+	.cot-button-image-icon > svg path {
+		@include themed() {
+			fill: t($_accent-text) !important;
+		}
+	}
+}
+@mixin iconbutton-accent-hover() {
+	@include themed() {
+		background-color: t($_hover-hover) !important;
+	}
+}
+@mixin iconbutton-accent-focus() {
+	border-color: $white !important;
+}
+@mixin iconbutton-accent-pressed() {
+	@include themed() {
+		border-color: t($_hover_hover) !important;
+		background-color: t($_hover_active) !important;
+	}
+}
+.cot-button-image.cot-button-image-accent { @include iconbutton-accent-default(); }
+@include can-hover() { .cot-button-image.cot-button-image-accent:hover {
+	@include iconbutton-accent-hover();
+} }
+.cot-button-image.cot-button-image-accent[data-focus-visible-added] {
+	@include iconbutton-accent-hover();
+	@include iconbutton-accent-focus();
+}
+.cot-button-image.cot-button-image-accent.cot-button-pressed { @include iconbutton-accent-pressed(); }
+/* Light IconButton theme */
+@mixin iconbutton-light-hover() {
+	background-color: $accent-hover;
+}
+@mixin iconbutton-light-focus() {
+	border-color: $accent;
+}
+@mixin iconbutton-light-pressed() {
+	border-color: $accent;
+	background-color: $accent-pressed;
+}
+.theme-light {
+	@include can-hover() { .cot-button-image:hover {
+		@include iconbutton-light-hover();
+	} }
+	.cot-button-image[data-focus-visible-added] {
+		@include iconbutton-light-hover();
+		@include iconbutton-light-focus();
+	}
+	.cot-button-image.cot-button-pressed {
+		@include iconbutton-light-pressed();
+	}
+}
+/* Dark IconButton theme */
+@mixin iconbutton-dark-hover() {
+	background-color: $hover-shallow;
+}
+@mixin iconbutton-dark-focus() {
+	border-color: $white;
+}
+@mixin iconbutton-dark-pressed() {
+	border-color: $hover-shallow;
+	background-color: $hover-medium;
+}
+.theme-dark {
+	@include can-hover() { .cot-button-image:hover {
+		@include iconbutton-dark-hover();
+	} }
+	.cot-button-image[data-focus-visible-added] {
+		@include iconbutton-dark-hover();
+		@include iconbutton-dark-focus();
+	}
+	.cot-button-image.cot-button-pressed {
+		@include iconbutton-dark-pressed();
+	}
+}
+
+/* RadioButton.vue styles */
+$radiobutton-size-total: 42px;
+$radiobutton-size-outer: 18px;
+$radiobutton-size-inner: 10px;
+/* Initial button styles */
+.cot-button-radio {
+	height: $radiobutton-size-total;
+
+	/* Always show the pointer cursor when hovering over this element */
+	* { cursor: pointer; }
+
+	/* UI styles */
+	> .cot-button-radio-ui {
+		display: flex;
+		align-items: center;
+
+		height: $radiobutton-size-total;
+
+		> .cot-button-radio-circle {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			/* Big enough for the outer button ring + border size */
+			width: $radiobutton-size-outer + ($border-thick * 2);
+			height: $radiobutton-size-outer + ($border-thick * 2);
+
+			/* Relative positioning for absolute .cot-button-radio-outer::before */
+			position: relative;
+
+			/* Margins on either side */
+			margin-left: $margin-medium; margin-right: $margin-medium;
+
+			/* Outer ring styles */
+			> .cot-button-radio-outer {
+				/* Center inner dot (no matter the size) */
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				width: $radiobutton-size-outer;
+				height: $radiobutton-size-outer;
+
+				border-radius: $radius-50;
+				border-width: $border-thick;
+				border-style: solid;
+
+				@include animated-border();
+
+				@include themed() {
+					border-color: t($_text);
+				}
+
+				/* Inner circle styles */
+				> .cot-button-radio-inner {
+					/* Will be resized later */
+					width: 0;
+					height: 0;
+
+					border-radius: $radius-50;
+
+					background-color: transparent;
+
+					@include animated();
+				}
+			}
+
+			/* Hover styles */
+			> .cot-button-radio-outer::before {
+				/* Show empty content that can be styled */
+				content: "";
+
+				display: block;
+
+				/* Force the width and height exactly */
+				width: $radiobutton-size-total;
+				min-width: $radiobutton-size-total;
+				max-width: $radiobutton-size-total;
+				height: $radiobutton-size-total;
+				min-height: $radiobutton-size-total;
+				max-height: $radiobutton-size-total;
+
+				/* Don't mess up positioning of the inner dot */
+				position: absolute;
+
+				border-radius: $radius-50;
+				border-width: $border-thin;
+				border-style: solid;
+				border-color: transparent;
+
+				background-color: transparent;
+
+				@include animated();
+			}
+		}
+
+		> .cot-button-radio-label {
+			@include no-select();
+			@include one-line-ellipsis();
+		}
+	}
+}
+/* Use accent color when checked and show inner dot*/
+.cot-button-radio.cot-button-radio-checked > .cot-button-radio-ui > .cot-button-radio-circle > .cot-button-radio-outer {
+	@include themed() {
+		border-color: t($_accent);
+	}
+
+	/* Show inner dot */
+	> .cot-button-radio-inner {
+		width: $radiobutton-size-inner;
+		height: $radiobutton-size-inner;
+
+		@include themed() {
+			background-color: t($_accent);
+		}
+	}
+}
+/* Light RadioButton theme */
+@mixin radiobutton-light-hover() {
+	.cot-button-radio-outer::before {
+		background-color: $accent-hover;
+	}
+}
+@mixin radiobutton-light-focus() {
+	.cot-button-radio-outer::before {
+		border-color: $accent;
+	}
+}
+.theme-light {
+	@include can-hover() { .cot-button-radio:hover {
+		@include radiobutton-light-hover();
+	} }
+	.cot-button-radio[data-focus-visible-added] {
+		@include radiobutton-light-hover();
+		@include radiobutton-light-focus();
+	}
+}
+/* Dark RadioButton theme */
+@mixin radiobutton-dark-hover() {
+	.cot-button-radio-outer::before {
+		background-color: $hover-shallow;
+	}
+}
+@mixin radiobutton-dark-focus() {
+	.cot-button-radio-outer::before {
+		border-color: $white;
+	}
+}
+.theme-dark {
+	@include can-hover() { .cot-button-radio:hover {
+		@include radiobutton-dark-hover();
+	} }
+	.cot-button-radio[data-focus-visible-added] {
+		@include radiobutton-dark-hover();
+		@include radiobutton-dark-focus();
+	}
+}
+
+/* RadioList.vue styles */
+.cot-radios { width: 100%; }
+
+/* Modal.vue styles */
+$modalinner-max-width: 600px;
+/* Inner modal styles */
+.cot-modal {
+	width: 100%;
+	max-width: $modalinner-max-width;
+
+	margin: $margin-medium;
+	padding: $padding-medium;
+
+	border-radius: $radius-large;
+	border-width: $border-thin;
+	border-style: solid;
+
+	@include animated-color();
+
+	@include themed() {
+		border-color: t($_level2);
+		background-color: t($_level1);
+		color: t($_text);
+	}
+}
+/* Outer container styles */
+.cot-modal-container {
+	/* Center inner modal */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	/* Fill the whole page */
+	position: fixed;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	margin: 0; padding: 0; border: 0;
+
+	/* Display on-top of everything */
+	z-index: 1000;
+
+	/* Allow Y scrolling */
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* ModalHeader.vue styles */
+.cot-modal-header {
+	display: flex;
+
+	width: 100%;
+
+	> h2 {
+		display: block;
+
+		/* Hide top margin */
+		margin-top: 0;
+
+		flex: 1;
+	}
+	> .cot-button-image {
+		/* Force width and height (h2's flex: 1 can break this) */
+		width: $iconbutton-outer;
+		min-width: $iconbutton-outer;
+		max-width: $iconbutton-outer;
+		height: $iconbutton-outer;
+
+		/* Jam the IconButton into the top-right corner */
+		margin-left: 0; margin-bottom: 0;
+		margin-top: -$margin-small; margin-right: -$margin-small;
+	}
+}

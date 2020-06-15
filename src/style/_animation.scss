@@ -1,0 +1,58 @@
+/* src/style/_animation.scss
+	Animations and transitions */
+
+@import "utils";
+
+/* Default transition settings for various properties */
+$animated-color:	color $transition-medium, background-color $transition-medium;
+$animated-border:	border-color $transition-medium, border-width $transition-short;
+$animated-opacity:	opacity $transition-medium;
+$animated-size:		width $transition-medium, height $transition-medium;
+$animated-transform:	transform $transition-short;
+
+/* Animate colors */
+@mixin animated-color() {
+	transition: $animated-color;
+}
+/* Animate borders */
+@mixin animated-border() {
+	transition: $animated-border;
+}
+/* Animate opacity */
+@mixin animated-opacity() {
+	transition: $animated-opacity;
+}
+/* Animate sizes */
+@mixin animated-size() {
+	transition: $animated-size;
+}
+/* Animate transforms */
+@mixin animated-transform() {
+	transition: $animated-transform;
+}
+/* Animate everything! */
+@mixin animated() {
+	transition:
+		$animated-color,
+		$animated-border,
+		$animated-opacity,
+		$animated-size,
+		$animated-transform;
+}
+
+/* Fading <transition>s */
+.fade-enter-active, .fade-leave-active {
+	transition: opacity $transition-medium;
+}
+.fade-enter, .fade-leave-to {
+	opacity: 0;
+}
+
+/* Fly-in <transition>s */
+.flyin-enter-active, .flyin-leave-active {
+	transition: opacity $transition-medium, transform $transition-short;
+}
+.flyin-enter, .flyin-leave-to {
+	opacity: 0;
+	transform: translateY(-256px);
+}

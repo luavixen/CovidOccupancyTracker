@@ -1,0 +1,120 @@
+/* src/style/_theme.scss
+	Color definitions, theme definitions, and mixins for generating code for each theme */
+
+/* Monochrome color pallet */
+$white:			#ffffff;
+$gray-100:		#f5f5f5;
+$gray-200:		#eeeeee;
+$gray-300:		#e0e0e0;
+$gray-400:		#bdbdbd;
+$gray-500:		#9e9e9e;
+$gray-600:		#757575;
+$gray-700:		#616161;
+$gray-800:		#424242;
+$gray-900:		#212121;
+$black:			#000000;
+
+/* Semi-transparent hover color pallet */
+$hover-shallow:		rgba(255, 255, 255, 0.3);
+$hover-more:		rgba(255, 255, 255, 0.4);
+$hover-medium:		rgba(255, 255, 255, 0.5);
+$hover-deep:		rgba(255, 255, 255, 0.7);
+
+/* Accent color pallet */
+$accent:		#673ab7;
+$accent-light:		#9a67ea;
+$accent-dark:		#320b86;
+$accent-hover:		rgba(154, 103, 234, 0.3);
+$accent-pressed:	rgba(154, 103, 234, 0.5);
+
+/* Error color pallet (currently unused) */
+$error:			#dc3545;
+$error-light:		#ff6b70;
+$error-dark:		#a3001e;
+
+/* Theme dictionary */
+$themes: (
+	/* Light theme color set */
+	light: (
+		level1: $white,
+		level2: $white,
+		level3: $white,
+		level4: $white,
+
+		text: $gray-900,
+		text-disabled: $gray-700,
+
+		hover-hover: $hover-more,
+		hover-active: $hover-deep,
+
+		accent: $accent,
+		accent-focus: $accent-light,
+		accent-hover: $accent-hover,
+		accent-pressed: $accent-pressed,
+		accent-text: $white,
+
+		error: $error,
+		error-focus: $error-light,
+		error-text: $white
+	),
+	/* Dark theme color set */
+	dark: (
+		level1: $gray-900,
+		level2: $gray-800,
+		level3: $gray-700,
+		level4: $gray-600,
+
+		text: $gray-100,
+		text-disabled: $gray-400,
+
+		hover-hover: $hover-shallow,
+		hover-active: $hover-medium,
+
+		accent: $accent-light,
+		accent-focus: $accent,
+		accent-hover: $accent-hover,
+		accent-pressed: $accent-pressed,
+		accent-text: $white,
+
+		error: $error-light,
+		error-focus: $error,
+		error-text: $white
+	)
+);
+
+/* Theme dictionary string "enumeration" */
+$_level1:		"level1";
+$_level2:		"level2";
+$_level3:		"level3";
+$_level4:		"level4";
+$_text:			"text";
+$_text-disabled:	"text-disabled";
+$_hover-hover:		"hover-hover";
+$_hover-active:		"hover-active";
+$_accent:		"accent";
+$_accent-focus:		"accent-focus";
+$_accent-hover:		"accent-hover";
+$_accent-pressed:	"accent-pressed";
+$_accent-text:		"accent-text";
+$_error:		"error";
+$_error-focus:		"error-focus";
+$_error-text:		"error-text";
+
+/* Mixin for generating rules for each possible theme */
+@mixin themed() {
+	@each $theme, $map in $themes {
+		.theme-#{$theme} & {
+			$theme-map: () !global;
+			@each $key, $submap in $map {
+				$value: map-get(map-get($themes, $theme), '#{$key}');
+				$theme-map: map-merge($theme-map, ($key: $value)) !global;
+			}
+			@content;
+			$theme-map: null !global;
+		}
+	}
+}
+/* Utility function that helps get theme colors inside of the themed() mixin */
+@function t($key) {
+	@return map-get($theme-map, $key);
+}

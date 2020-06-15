@@ -18,8 +18,8 @@ import "@/i18n";
 /* Load our App component, the root UI element */
 import App from "@/App.vue";
 
-/* Import and apply the src/style.scss stylesheet globally */
-import "@/style.scss";
+/* Import and apply the src/style/style.scss stylesheet globally */
+import "@/style/style.scss";
 
 /* Enable the :focus-visible CSS selector polyfill */
 import "focus-visible";
