@@ -10,7 +10,7 @@
 			<div class="cot-header-section cot-header-right">
 				<HeaderLocation />
 				<IconButton accent :title="$t('header.settings')" @boop="openSettings">
-					<IconSettings/>
+					<IconSettings />
 				</IconButton>
 			</div>
 		</div>

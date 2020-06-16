@@ -13,6 +13,8 @@
 		:aria-disabled="String(disabled)"
 		:tabindex="disabled ? '-1' : '0'"
 
+		@touchstart.prevent="down"
+		@touchend.prevent="up"
 		@mousedown.left="down"
 		@mouseup.left="up"
 		@keydown.enter="down"
@@ -39,8 +41,9 @@ export default class Button extends Vue {
 	}
 	/** Method run when the button is released */
 	up(event: any) {
+		if (!this.pressed) return;
 		this.pressed = false;
-		/** Emit boop event! */
+		/* Emit boop event! */
 		this.$emit("boop", event);
 	}
 
@@ -55,10 +58,12 @@ export default class Button extends Vue {
 
 	/* Register/unregister the unpressHandler */
 	mounted() {
+		window.addEventListener("touchend", this.unpressHandler);
 		window.addEventListener("mouseup", this.unpressHandler);
 		window.addEventListener("keyup", this.unpressHandler);
 	}
 	destroyed() {
+		window.removeEventListener("touchend", this.unpressHandler);
 		window.removeEventListener("mouseup", this.unpressHandler);
 		window.removeEventListener("keyup", this.unpressHandler);
 	}

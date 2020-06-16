@@ -51,6 +51,8 @@ $header-max-width: 1000px;
 .cot-header {
 	width: 100%;
 	height: $header-size;
+	min-height: $header-size;
+	max-height: $header-size;
 
 	@include no-overflow();
 	@include animated-color();
@@ -129,6 +131,8 @@ $header-max-width: 1000px;
 
 	transition: $animated-color, $animated-border;
 
+	@include pointer();
+
 	@include themed() {
 		border-color: t($_accent);
 		background-color: t($_accent);
@@ -152,7 +156,10 @@ $header-max-width: 1000px;
 @include can-hover() { .cot-button-text:hover {
 	@include textbutton-default-hover();
 } }
-.cot-button-text[data-focus-visible-added] { @include textbutton-default-hover(); }
+.cot-button-text[data-focus-visible-added],
+.cot-button-text.cot-button-pressed {
+	@include textbutton-default-hover();
+}
 /* Light TextButton styles */
 @mixin textbutton-light-default() {
 	background-color: transparent;
@@ -165,12 +172,19 @@ $header-max-width: 1000px;
 	background-color: $accent-pressed;
 }
 .theme-light {
-	.cot-button-text { @include textbutton-light-default(); }
+	.cot-button-text {
+		@include textbutton-light-default();
+	}
 	@include can-hover() { .cot-button-text:hover {
 		@include textbutton-light-hover();
 	} }
-	.cot-button-text[data-focus-visible-added] { @include textbutton-light-hover(); }
-	.cot-button-text.cot-button-pressed { @include textbutton-light-pressed(); }
+	.cot-button-text[data-focus-visible-added] {
+		@include textbutton-light-hover();
+	}
+	.cot-button-text.cot-button-pressed {
+		@include textbutton-light-hover();
+		@include textbutton-light-pressed();
+	}
 }
 /* Dark TextButton styles */
 @mixin textbutton-dark-focus() {
@@ -181,8 +195,12 @@ $header-max-width: 1000px;
 	background-color: $accent-dark;
 }
 .theme-dark {
-	.cot-button-text[data-focus-visible-added] { @include textbutton-dark-focus(); }
-	.cot-button-text.cot-button-pressed { @include textbutton-dark-pressed(); }
+	.cot-button-text[data-focus-visible-added] {
+		@include textbutton-dark-focus();
+	}
+	.cot-button-text.cot-button-pressed {
+		@include textbutton-dark-pressed();
+	}
 }
 
 /* IconButton.vue styles */
@@ -206,6 +224,8 @@ $iconbutton-inner-pressed: 28;
 	background-color: transparent;
 
 	transition: $animated-color, $animated-border;
+
+	@include pointer();
 
 	> .cot-button-image-icon {
 		display: flex;
@@ -267,7 +287,10 @@ $iconbutton-inner-pressed: 28;
 	@include iconbutton-accent-hover();
 	@include iconbutton-accent-focus();
 }
-.cot-button-image.cot-button-image-accent.cot-button-pressed { @include iconbutton-accent-pressed(); }
+.cot-button-image.cot-button-image-accent.cot-button-pressed {
+	@include iconbutton-accent-hover();
+	@include iconbutton-accent-pressed();
+}
 /* Light IconButton theme */
 @mixin iconbutton-light-hover() {
 	background-color: $accent-hover;
@@ -288,6 +311,7 @@ $iconbutton-inner-pressed: 28;
 		@include iconbutton-light-focus();
 	}
 	.cot-button-image.cot-button-pressed {
+		@include iconbutton-light-hover();
 		@include iconbutton-light-pressed();
 	}
 }
@@ -311,6 +335,7 @@ $iconbutton-inner-pressed: 28;
 		@include iconbutton-dark-focus();
 	}
 	.cot-button-image.cot-button-pressed {
+		@include iconbutton-dark-hover();
 		@include iconbutton-dark-pressed();
 	}
 }
@@ -324,7 +349,7 @@ $radiobutton-size-inner: 10px;
 	height: $radiobutton-size-total;
 
 	/* Always show the pointer cursor when hovering over this element */
-	* { cursor: pointer; }
+	@include pointer();
 
 	/* UI styles */
 	> .cot-button-radio-ui {
@@ -452,6 +477,9 @@ $radiobutton-size-inner: 10px;
 		@include radiobutton-light-hover();
 		@include radiobutton-light-focus();
 	}
+	.cot-button-radio.cot-button-pressed {
+		@include radiobutton-light-hover();
+	}
 }
 /* Dark RadioButton theme */
 @mixin radiobutton-dark-hover() {
@@ -471,6 +499,9 @@ $radiobutton-size-inner: 10px;
 	.cot-button-radio[data-focus-visible-added] {
 		@include radiobutton-dark-hover();
 		@include radiobutton-dark-focus();
+	}
+	.cot-button-radio.cot-button-pressed {
+		@include radiobutton-dark-hover();
 	}
 }
 

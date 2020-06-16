@@ -27,9 +27,9 @@ $border-thin:		1px;
 $border-thick:		2px;
 
 /* Recommended transition time values*/
-$transition-short:	0.15s;
-$transition-medium:	0.2s;
-$transition-long:	0.4s;
+$transition-short:	0.2s;
+$transition-medium:	0.4s;
+$transition-long:	0.6s;
 
 /* Don't allow the user to select this element */
 @mixin no-select() {
@@ -39,6 +39,12 @@ $transition-long:	0.4s;
 @mixin no-interact() {
 	@include no-select();
 	pointer-events: none;
+}
+
+/* Show a pointer on this element and it's children */
+@mixin pointer() {
+	cursor: pointer;
+	* { cursor: pointer; }
 }
 
 /* Disallow overflow of content outside this container */
