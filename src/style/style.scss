@@ -45,7 +45,19 @@ html, body {
 }
 
 /* Dashboard.vue styles */
-/* .cot-dashboard {} */
+.cot-dashboard {
+	display: flex;
+	flex-direction: column;
+
+	> .cot-dashboard-body {
+		/* Fill all available space */
+		flex: 1;
+
+		/* Allow scrollbars */
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
+}
 
 /* Header.vue styles */
 $header-size: 66px;
@@ -53,8 +65,6 @@ $header-max-width: 1000px;
 .cot-header {
 	width: 100%;
 	height: $header-size;
-	min-height: $header-size;
-	max-height: $header-size;
 
 	@include no-overflow();
 	@include animated-color();
@@ -620,4 +630,44 @@ $modal-max-width: 500px;
 		margin-left: 0; margin-bottom: 0;
 		margin-top: -$margin-small; margin-right: -$margin-small;
 	}
+}
+
+/* SettingsModal.vue styles */
+.cot-modal-settings {
+	/* Footer styles */
+	.cot-modal-settings-footer {
+		display: flex;
+		/* Center text and other items */
+		align-items: center;
+
+		/* Fill available width */
+		width: 100%;
+
+		/* Hide margins on the theme toggle button */
+		> .cot-modal-settings-toggletheme {
+			margin: 0;
+		}
+		/* Copyright message styles */
+		> .cot-modal-settings-copyright {
+			/* Float to the right */
+			margin-left: auto;
+
+			font-size: 0.75em;
+
+			@include themed() {
+				color: t($_text-disabled);
+			}
+		}
+	}
+}
+
+/* Container.vue styles */
+$container-max-width: 800px;
+.cot-container {
+	width: 100%;
+	max-width: $container-max-width;
+	height: 100%;
+
+	/* Center horizontally */
+	margin-left: auto; margin-right: auto;
 }

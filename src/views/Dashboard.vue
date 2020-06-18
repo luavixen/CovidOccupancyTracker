@@ -3,20 +3,24 @@
 
 <template>
 	<div class="cot-dashboard">
-		<!-- Header, name + location -->
-		<Header><IconButton title="Open the settings menu" class="cot-button-image-accent"><IconSettings /></IconButton></Header>
-
-		<!-- App controls/body -->
-
-		<!-- Footer buttons -->
+		<!-- Dashboard top -->
+		<div class="cot-dashboard-top">
+			<Header />
+		</div>
+		<!-- Dashboard body -->
+		<div class="cot-dashboard-body"><Container>
+		</Container></div>
 	</div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-import Header from "@/components/Header.vue";
+import store, { Action } from "@/store";
 
-@Component({ components: { Header } })
+import Header from "@/components/Header.vue";
+import Container from "@/components/Container.vue";
+
+@Component({ components: { Header, Container } })
 export default class Dashboard extends Vue {}
 </script>

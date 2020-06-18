@@ -20,10 +20,8 @@ export default {
 	},
 
 	settings: {
-		title: "Location"
-	},
-
-	dashboard: {
+		title: "Location",
+		copyright: "Copyright \u00A9 {year} Lua MacDougall",
 		toggleTheme: "Toggle the current theme"
 	}
 };
