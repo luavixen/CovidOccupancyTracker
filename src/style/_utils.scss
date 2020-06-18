@@ -28,8 +28,8 @@ $border-thick:		2px;
 
 /* Recommended transition time values*/
 $transition-short:	0.2s;
-$transition-medium:	0.4s;
-$transition-long:	0.6s;
+$transition-medium:	0.3s;
+$transition-long:	0.4s;
 
 /* Don't allow the user to select this element */
 @mixin no-select() {

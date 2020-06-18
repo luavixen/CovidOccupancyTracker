@@ -15,12 +15,14 @@
 
 		@boop="boop"
 	>
-		<div class="cot-button-radio-ui">
+		<div class="cot-button-radio-circle-container">
 			<div class="cot-button-radio-circle">
 				<div class="cot-button-radio-outer">
 					<div class="cot-button-radio-inner" />
 				</div>
 			</div>
+		</div>
+		<div class="cot-button-radio-label-container">
 			<label class="cot-button-radio-label" :for="id">{{ title }}</label>
 		</div>
 	</Button>

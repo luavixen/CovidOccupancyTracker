@@ -9,6 +9,8 @@
 *, *::before, *::after {
 	outline: none; /* Disable ugly default outlines */
 
+	flex-shrink: 0; /* Never shrink when used in a flexbox */
+
 	font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 	font-weight: $weight-normal;
 }
@@ -39,7 +41,7 @@ html, body {
 	}
 
 	/* Make the inner view fill the screen */
-	> .cot-view { width: 100%; height: 100%; }
+	> .cot-app-view { width: 100%; height: 100%; }
 }
 
 /* Dashboard.vue styles */
@@ -344,25 +346,25 @@ $iconbutton-inner-pressed: 28;
 $radiobutton-size-total: 42px;
 $radiobutton-size-outer: 18px;
 $radiobutton-size-inner: 10px;
-/* Initial button styles */
+/* RadioButton styles */
 .cot-button-radio {
+	display: flex;
+
 	height: $radiobutton-size-total;
 
 	/* Always show the pointer cursor when hovering over this element */
 	@include pointer();
 
-	/* UI styles */
-	> .cot-button-radio-ui {
+	/* Circle button container styles */
+	.cot-button-radio-circle-container {
+		/* Vertically center circle */
 		display: flex;
 		align-items: center;
 
-		height: $radiobutton-size-total;
+		/* Take 100% available height */
+		height: 100%;
 
 		> .cot-button-radio-circle {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-
 			/* Big enough for the outer button ring + border size */
 			width: $radiobutton-size-outer + ($border-thick * 2);
 			height: $radiobutton-size-outer + ($border-thick * 2);
@@ -403,7 +405,10 @@ $radiobutton-size-inner: 10px;
 
 					background-color: transparent;
 
-					@include animated();
+					transition:
+						$animated-color,
+						width $transition-short,
+						height $transition-short;
 				}
 			}
 
@@ -435,15 +440,35 @@ $radiobutton-size-inner: 10px;
 				@include animated();
 			}
 		}
+	}
 
+	/* Label container styles */
+	> .cot-button-radio-label-container {
+		/* Center the text vertically */
+		display: flex;
+		align-items: center;
+
+		/* Fix for not shrinking far enough */
+		min-width: 0;
+
+		/* Prevent overflow */
+		flex: 1 1 0;
+
+		/* Label styles */
 		> .cot-button-radio-label {
+			display: block;
+
+			/* Stay within bounds ! */
+			width: 100%;
+			max-width: 100%;
+
 			@include no-select();
 			@include one-line-ellipsis();
 		}
 	}
 }
 /* Use accent color when checked and show inner dot*/
-.cot-button-radio.cot-button-radio-checked > .cot-button-radio-ui > .cot-button-radio-circle > .cot-button-radio-outer {
+.cot-button-radio.cot-button-radio-checked > .cot-button-radio-circle-container > .cot-button-radio-circle > .cot-button-radio-outer {
 	@include themed() {
 		border-color: t($_accent);
 	}
@@ -509,34 +534,9 @@ $radiobutton-size-inner: 10px;
 .cot-radios { width: 100%; }
 
 /* Modal.vue styles */
-$modalinner-max-width: 600px;
-/* Inner modal styles */
-.cot-modal {
-	width: 100%;
-	max-width: $modalinner-max-width;
-
-	margin: $margin-medium;
-	padding: $padding-medium;
-
-	border-radius: $radius-large;
-	border-width: $border-thin;
-	border-style: solid;
-
-	@include animated-color();
-
-	@include themed() {
-		border-color: t($_level2);
-		background-color: t($_level1);
-		color: t($_text);
-	}
-}
-/* Outer container styles */
-.cot-modal-container {
-	/* Center inner modal */
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
+$modal-max-width: 500px;
+/* Full-screen layer styles */
+.cot-modal-layer {
 	/* Fill the whole page */
 	position: fixed;
 	left: 0;
@@ -548,11 +548,54 @@ $modalinner-max-width: 600px;
 	/* Display on-top of everything */
 	z-index: 1000;
 
-	/* Allow Y scrolling */
+	/* Display scrollbars if required */
 	overflow-x: hidden;
 	overflow-y: auto;
 
 	background-color: rgba(0, 0, 0, 0.5);
+}
+/* Modal container styles */
+.cot-modal-container {
+	/* Include padding in width/height */
+	box-sizing: border-box;
+
+	/* Center the modal vertically */
+	display: flex;
+	align-items: center;
+
+	/* Expand to fill all available width */
+	width: 100%;
+	max-width: 100%;
+	/* Expand to fill screen height, but expand further to show the whole modal if needed */
+	min-height: 100%;
+
+	padding: $padding-medium;
+}
+/* Modal styles */
+.cot-modal {
+	/* Include padding in width/height */
+	box-sizing: border-box;
+
+	width: 100%;
+	max-width: $modal-max-width;
+
+	/* Center horizontally */
+	margin-left: auto; margin-right: auto;
+
+	padding: $padding-medium;
+
+	border-radius: $radius-large;
+	border-width: $border-thin;
+	border-style: solid;
+
+	@include animated-color();
+	@include no-overflow();
+
+	@include themed() {
+		border-color: t($_level2);
+		background-color: t($_level1);
+		color: t($_text);
+	}
 }
 
 /* ModalHeader.vue styles */
@@ -568,14 +611,11 @@ $modalinner-max-width: 600px;
 		margin-top: 0;
 
 		flex: 1;
+
+		@include no-select();
+		@include one-line-ellipsis();
 	}
 	> .cot-button-image {
-		/* Force width and height (h2's flex: 1 can break this) */
-		width: $iconbutton-outer;
-		min-width: $iconbutton-outer;
-		max-width: $iconbutton-outer;
-		height: $iconbutton-outer;
-
 		/* Jam the IconButton into the top-right corner */
 		margin-left: 0; margin-bottom: 0;
 		margin-top: -$margin-small; margin-right: -$margin-small;

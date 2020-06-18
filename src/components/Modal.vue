@@ -3,17 +3,19 @@
 
 <template>
 	<transition name="fade"><div
-		class="cot-modal-container"
+		class="cot-modal-layer"
 		v-if="showContainer"
 		@click.self="hide"
 	>
 		<transition name="flyin">
-			<div
-				class="cot-modal"
-				role="dialog"
-				v-show="showContent"
-				@click.stop
-			><slot /></div>
+			<div class="cot-modal-container" @click.self="hide">
+				<div
+					class="cot-modal"
+					role="dialog"
+					v-show="showContent"
+					@click.stop
+				><slot /></div>
+			</div>
 		</transition>
 	</div></transition>
 </template>
