@@ -7,6 +7,7 @@
 $animated-color:	color $transition-medium, background-color $transition-medium;
 $animated-border:	border-color $transition-medium, border-width $transition-short;
 $animated-opacity:	opacity $transition-medium;
+$animated-shadow:	box-shadow $transition-medium;
 $animated-size:		width $transition-medium, height $transition-medium;
 $animated-transform:	transform $transition-short;
 
@@ -22,6 +23,10 @@ $animated-transform:	transform $transition-short;
 @mixin animated-opacity() {
 	transition: $animated-opacity;
 }
+/* Animate shadows */
+@mixin animated-shadow() {
+	transition: $animated-shadow;
+}
 /* Animate sizes */
 @mixin animated-size() {
 	transition: $animated-size;
@@ -36,6 +41,7 @@ $animated-transform:	transform $transition-short;
 		$animated-color,
 		$animated-border,
 		$animated-opacity,
+		$animated-shadow,
 		$animated-size,
 		$animated-transform;
 }

@@ -248,7 +248,6 @@ $iconbutton-inner-pressed: 28;
 		height: 100%;
 
 		@include no-select();
-		@include no-overflow();
 
 		> svg {
 			display: block;
@@ -349,6 +348,104 @@ $iconbutton-inner-pressed: 28;
 	.cot-button-image.cot-button-pressed {
 		@include iconbutton-dark-hover();
 		@include iconbutton-dark-pressed();
+	}
+}
+
+/* BigButton.vue styles */
+$bigbutton-size: 72px;
+$bigbutton-transform-none: scale(1);
+$bigbutton-transform-hover: scale(1.1);
+$bigbutton-transform-pressed: scale(0.8);
+.cot-button-big {
+	display: block;
+
+	height: $bigbutton-size;
+
+	padding: $padding-medium;
+	margin: $margin-medium;
+
+	border-radius: $radius-large;
+	border-width: $border-thick;
+	border-style: solid;
+
+	box-shadow: none;
+
+	background-color: transparent;
+
+	transition: $animated-color, $animated-border, $animated-shadow;
+
+	@include pointer();
+
+	@include themed() {
+		border-color: t($_accent);
+	}
+
+	> .cot-button-big-icon {
+		width: $bigbutton-size;
+		height: $bigbutton-size;
+
+		margin-left: auto; margin-right: auto;
+
+		@include no-select();
+
+		> svg {
+			display: block;
+
+			transform: $bigbutton-transform-none;
+
+			@include animated-transform();
+
+			path {
+				@include themed() {
+					fill: t($_text);
+				}
+			}
+		}
+	}
+}
+/* Default BigButton theme styles */
+@mixin bigbutton-default-hover() {
+	@include themed() {
+		background-color: t($_accent-hover);
+	}
+	> .cot-button-big-icon > svg {
+		transform: $bigbutton-transform-hover;
+	}
+}
+@mixin bigbutton-default-pressed() {
+	@include themed() {
+		background-color: t($_accent-pressed);
+	}
+	> .cot-button-big-icon > svg {
+		transform: $bigbutton-transform-pressed;
+	}
+}
+@include can-hover() { .cot-button-big:hover {
+	@include bigbutton-default-hover();
+} }
+.cot-button-big[data-focus-visible-added] {
+	@include bigbutton-default-hover();
+}
+.cot-button-big.cot-button-pressed {
+	@include bigbutton-default-hover();
+	@include bigbutton-default-pressed();
+}
+/* Light BigButton theme */
+@mixin bigbutton-light-focus() {
+	box-shadow: 0 0 0 $border-thick $accent-light;
+}
+.theme-light {
+	.cot-button-big[data-focus-visible-added] {
+		@include bigbutton-light-focus();
+	}
+}
+/* Dark BigButton theme */
+@mixin bigbutton-dark-focus() {
+	box-shadow: 0 0 0 $border-thick $white;
+}
+.theme-dark {
+	.cot-button-big[data-focus-visible-added] {
+		@include bigbutton-dark-focus();
 	}
 }
 
@@ -543,6 +640,64 @@ $radiobutton-size-inner: 10px;
 /* RadioList.vue styles */
 .cot-radios { width: 100%; }
 
+/* NumberControl.vue styles */
+$number-size: 76px;
+$number-font-size: 64px;
+.cot-number {
+	/* Never grow bigger then the screen */
+	max-width: 100%;
+
+	/* Number display styles */
+	.cot-number-display {
+		display: flex;
+
+		/* Force height */
+		height: $number-size;
+		max-height: $number-size;
+
+		margin: $margin-medium;
+
+		border-radius: $radius-large;
+		border-width: $border-thick;
+		border-style: solid;
+
+		@include animated-color();
+
+		@include themed() {
+			border-color: t($_accent);
+		}
+
+		/* Number display text styles */
+		> .cot-number-display-text {
+			/* No top/bottom margins */
+			margin-top: 0; margin-bottom: 0;
+			/* Align center with edit */
+			margin-left: $number-size;
+
+			/* Set font size and center the text */
+			font-size: $number-font-size;
+			text-align: center;
+
+			/* Consume available space */
+			flex: 1;
+
+			@include no-select();
+			@include one-line-ellipsis();
+		}
+		/* Number display edit button box styles */
+		> .cot-number-display-edit {
+			/* Center edit button */
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			/* Force width/height square */
+			width: $number-size;
+			height: $number-size;
+		}
+	}
+}
+
 /* Modal.vue styles */
 $modal-max-width: 500px;
 /* Full-screen layer styles */
@@ -664,10 +819,15 @@ $modal-max-width: 500px;
 /* Container.vue styles */
 $container-max-width: 800px;
 .cot-container {
+	display: flex;
+	align-items: center;
+
 	width: 100%;
 	max-width: $container-max-width;
-	height: 100%;
+	min-height: 100%;
 
 	/* Center horizontally */
 	margin-left: auto; margin-right: auto;
+
+	> * { flex: 1; }
 }

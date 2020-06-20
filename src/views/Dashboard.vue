@@ -9,6 +9,7 @@
 		</div>
 		<!-- Dashboard body -->
 		<div class="cot-dashboard-body"><Container>
+			<NumberControl />
 		</Container></div>
 	</div>
 </template>
@@ -20,7 +21,8 @@ import store, { Action } from "@/store";
 
 import Header from "@/components/Header.vue";
 import Container from "@/components/Container.vue";
+import NumberControl from "@/components/NumberControl.vue";
 
-@Component({ components: { Header, Container } })
+@Component({ components: { Header, Container, NumberControl } })
 export default class Dashboard extends Vue {}
 </script>
