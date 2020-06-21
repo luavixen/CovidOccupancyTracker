@@ -698,6 +698,61 @@ $number-font-size: 64px;
 	}
 }
 
+/* NumberInput.vue styles */
+.cot-input-number {
+	display: flex;
+
+	/* Replace default styles of the <input type="number"> */
+	> .cot-input-number-input {
+		box-sizing: border-box;
+
+		display: block;
+
+		width: 100%;
+		min-width: 100%;
+		max-width: 100%;
+
+		flex: 1;
+
+		margin: 0;
+		padding: $padding-small;
+
+		border-radius: $radius-large;
+		border-width: $border-thin;
+		border-style: solid;
+
+		background-color: transparent;
+
+		box-shadow: none;
+
+		@include animated();
+
+		@include themed() {
+			color: t($_text);
+			border-color: t($_accent);
+		}
+
+		font-size: 2em;
+		text-align: center;
+	}
+	/* Additional focus styles */
+	> .cot-input-number-input:focus {
+		@include themed() {
+			background-color: t($_accent-hover);
+		}
+	}
+
+	/* Disable rendering of the inc/dec buttons */
+	.cot-input-number-input::-webkit-outer-spin-button,
+	.cot-input-number-input::-webkit-inner-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+	.cot-input-number-input[type=number] { -moz-appearance: textfield; }
+}
+/* NumberInput borders thicker on dark theme */
+.theme-dark .cot-input-number-input { border-width: $border-thick; }
+
 /* Modal.vue styles */
 $modal-max-width: 500px;
 /* Full-screen layer styles */
@@ -809,10 +864,23 @@ $modal-max-width: 500px;
 
 			font-size: 0.75em;
 
+			@include no-select();
+
 			@include themed() {
 				color: t($_text-disabled);
 			}
 		}
+	}
+}
+
+/* EditModal.vue styles */
+.cot-modal-edit {
+	.cot-modal-edit-buttons {
+		display: flex;
+		justify-content: flex-end;
+
+		margin-top: $margin-small; margin-bottom: -$margin-small;
+		margin-left: 0; margin-right: -$margin-small;
 	}
 }
 

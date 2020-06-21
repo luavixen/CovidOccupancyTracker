@@ -219,7 +219,7 @@ export const store = new Vuex.Store<State>({
 		/** Set the current people count, updating the database if possible */
 		[Action.CountSet]: async (store, people: number) => {
 			/* Guard against invalid people counts (currently accepting all non-negative numbers) */
-			if (typeof people !== "number" || people >= 0) {
+			if (typeof people !== "number") {
 				throw new Error("Invalid people");
 			}
 			/* Convert people to a whole number */
