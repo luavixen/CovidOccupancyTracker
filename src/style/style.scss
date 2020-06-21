@@ -661,7 +661,7 @@ $radiobutton-size-inner: 10px;
 
 /* NumberControl.vue styles */
 $number-size: 76px;
-$number-font-size: 64px;
+$number-font-size: 56px;
 .cot-number {
 	/* Never grow bigger then the screen */
 	max-width: 100%;
@@ -669,10 +669,9 @@ $number-font-size: 64px;
 	/* Number display styles */
 	.cot-number-display {
 		display: flex;
+		align-items: center;
 
-		/* Force height */
 		height: $number-size;
-		max-height: $number-size;
 
 		margin: $margin-medium;
 
@@ -687,21 +686,25 @@ $number-font-size: 64px;
 		}
 
 		/* Number display text styles */
-		> .cot-number-display-text {
-			/* No top/bottom margins */
-			margin-top: 0; margin-bottom: 0;
+		> .cot-number-display-text-container {
 			/* Align center with edit */
 			margin-left: $number-size;
-
-			/* Set font size and center the text */
-			font-size: $number-font-size;
-			text-align: center;
 
 			/* Consume available space */
 			flex: 1;
 
-			@include no-select();
-			@include one-line-ellipsis();
+			/* Inner text styling */
+			> .cot-number-display-text {
+				/* No top/bottom margins */
+				margin-top: 0; margin-bottom: 0;
+
+				/* Set font size and center the text */
+				font-size: $number-font-size;
+				text-align: center;
+
+				@include no-select();
+				@include one-line-ellipsis();
+			}
 		}
 		/* Number display edit button box styles */
 		> .cot-number-display-edit {

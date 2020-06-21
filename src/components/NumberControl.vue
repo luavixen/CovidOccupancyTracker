@@ -9,7 +9,12 @@
 		</BigButton>
 		<!-- Number -->
 		<div class="cot-number-display">
-			<h1 class="cot-number-display-text">{{ number }}</h1>
+			<div class="cot-number-display-text-container">
+				<h1
+					class="cot-number-display-text"
+					:aria-label="$t('number.label')"
+				>{{ number }}</h1>
+			</div>
 			<div class="cot-number-display-edit">
 				<IconButton :title="$t('number.edit')" @boop="edit">
 					<IconEdit />
