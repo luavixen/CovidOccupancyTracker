@@ -2,7 +2,7 @@
 	Settings modal, opened using the top-right settings cog, used to change location -->
 
 <template>
-	<Modal class="cot-modal-settings" modal-id="settings" ref="modal">
+	<Modal class="cot-modal-settings" modal-id="settings">
 		<ModalHeader modal-id="settings" :title="$t('settings.title')" />
 		<RadioList
 			:list="locationRadios"
