@@ -6,7 +6,10 @@
 		class="cot-button"
 		role="button"
 
-		:class="{ ['cot-button-pressed']: pressed }"
+		:class="{
+			['cot-button-pressed']: pressed,
+			['cot-button-disabled']: disabled
+		}"
 
 		aria-pressed="undefined"
 
@@ -44,7 +47,7 @@ export default class Button extends Vue {
 		if (!this.pressed) return;
 		this.pressed = false;
 		/* Emit boop event! */
-		this.$emit("boop", event);
+		if (!this.disabled) this.$emit("boop", event);
 	}
 
 	/** Unpress this button whenever the space/enter/mouse1 keys are released *anywhere on the page* */

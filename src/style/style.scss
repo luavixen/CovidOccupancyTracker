@@ -158,6 +158,10 @@ $header-max-width: 1000px;
 		font-weight: $weight-bold;
 	}
 }
+/* No cursor when disabled */
+.cot-button-text.cot-button-disabled {
+	* { cursor: not-allowed; }
+}
 /* Uni-theme hover styles */
 @mixin textbutton-default-hover() {
 	@include themed() {
@@ -183,6 +187,11 @@ $header-max-width: 1000px;
 @mixin textbutton-light-pressed() {
 	background-color: $accent-pressed;
 }
+@mixin textbutton-light-disabled() {
+	border-color: $gray-400;
+	background-color: $gray-400;
+	color: $gray-900;
+}
 .theme-light {
 	.cot-button-text {
 		@include textbutton-light-default();
@@ -197,6 +206,9 @@ $header-max-width: 1000px;
 		@include textbutton-light-hover();
 		@include textbutton-light-pressed();
 	}
+	.cot-button-text.cot-button-disabled {
+		@include textbutton-light-disabled();
+	}
 }
 /* Dark TextButton styles */
 @mixin textbutton-dark-focus() {
@@ -206,12 +218,19 @@ $header-max-width: 1000px;
 	border-color: $accent-dark;
 	background-color: $accent-dark;
 }
+@mixin textbutton-dark-disabled() {
+	border-color: $gray-700;
+	background-color: $gray-700;
+}
 .theme-dark {
 	.cot-button-text[data-focus-visible-added] {
 		@include textbutton-dark-focus();
 	}
 	.cot-button-text.cot-button-pressed {
 		@include textbutton-dark-pressed();
+	}
+	.cot-button-text.cot-button-disabled {
+		@include textbutton-dark-disabled();
 	}
 }
 
