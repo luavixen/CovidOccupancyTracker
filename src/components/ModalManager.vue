@@ -4,6 +4,7 @@
 <template>
 	<div class="cot-modal-manager">
 		<SettingsModal />
+		<EditModal />
 	</div>
 </template>
 
@@ -13,8 +14,9 @@ import { Component, Vue } from "vue-property-decorator";
 import { ModalEvents } from "@/components/Modal.vue";
 
 import SettingsModal from "@/components/SettingsModal.vue";
+import EditModal from "@/components/EditModal.vue";
 
-@Component({ components: { SettingsModal } })
+@Component({ components: { SettingsModal, EditModal } })
 export default class ModalManager extends Vue {
 	/** List of open modals (by ID) */
 	openModals: string[] = [];

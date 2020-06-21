@@ -48,17 +48,17 @@ $animated-transform:	transform $transition-short;
 
 /* Fading <transition>s */
 .fade-enter-active, .fade-leave-active {
-	transition: opacity $transition-medium;
+	transition: opacity $transition-medium !important;
 }
 .fade-enter, .fade-leave-to {
-	opacity: 0;
+	opacity: 0 !important;
 }
 
 /* Fly-in <transition>s */
 .flyin-enter-active, .flyin-leave-active {
-	transition: opacity $transition-medium, transform $transition-short;
+	transition: opacity $transition-medium, transform $transition-short !important;
 }
 .flyin-enter, .flyin-leave-to {
-	opacity: 0;
-	transform: translateY(-256px);
+	opacity: 0 !important;
+	transform: translateY(-256px) !important;
 }

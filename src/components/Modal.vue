@@ -7,16 +7,16 @@
 		v-if="showContainer"
 		@click.self="hide"
 	>
-		<transition name="flyin">
-			<div class="cot-modal-container" @click.self="hide">
+		<div class="cot-modal-container" @click.self="hide">
+			<transition name="flyin">
 				<div
 					class="cot-modal"
 					role="dialog"
 					v-show="showContent"
 					@click.stop
 				><slot /></div>
-			</div>
-		</transition>
+			</transition>
+		</div>
 	</div></transition>
 </template>
 
