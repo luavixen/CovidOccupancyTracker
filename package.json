@@ -2,7 +2,7 @@
 	"name": "covid-occupancy-tracker",
 	"version": "1.0.0-PRERELEASE",
 	"description": "Webapp for tracking the number of people in a building, designed for a specific grocery store chain.",
-	"author": "Lua~ <luawhat@gmail.com> (https://lua.wtf/)",
+	"author": "Lua MacDougall <luawhat@gmail.com> (https://lua.wtf/)",
 	"license": "UNLICENSED",
 	"private": true,
 	"scripts": {

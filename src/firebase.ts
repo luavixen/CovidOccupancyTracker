@@ -10,13 +10,15 @@ import "firebase/performance";
 import "firebase/firestore";
 
 /* Import the configuration from config.js */
-import { firebaseConfig } from "@/config";
+import { firebaseConfig, firebaseFeatures } from "@/config";
 /* Initialize the Firebase SDK */
 firebase.initializeApp(firebaseConfig);
 
 /* Start up the analytics/performance/Firestore systems */
-firebase.analytics();
-firebase.performance();
+if (firebaseFeatures.analytics)
+	firebase.analytics();
+if (firebaseFeatures.performance)
+	firebase.performance();
 firebase.firestore();
 
 /* Enable Firestore persistance for offline usage */
